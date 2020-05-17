@@ -1,17 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import Test from "../components/Test"
 import { Divider } from 'react-native-elements';
+import TopBar from '../components/TopBar';
+import BottomBar from '../components/BottomBar';
 
 export default function FirstScreen() {
     return (
         <SafeAreaView style={styles.root}>
             <View style={styles.scoreTrackerContainer}>
                 <View style={styles.row}>
-                    <Test />
-                    <Test />
+                    <TopBar />
+                    <TopBar />
                 </View>
-                <Divider />
+                <Divider style={styles.divider} />
                 <View style={styles.row}>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Igra</Text>
@@ -20,6 +21,9 @@ export default function FirstScreen() {
                         <Text style={styles.text}>Zvanje</Text>
                     </View>
                 </View>
+            </View>
+            <View>
+                <BottomBar/>
             </View>
         </SafeAreaView>
     )
@@ -48,5 +52,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 42,
+    },
+    divider: {
+        height: 10,
     }
 })

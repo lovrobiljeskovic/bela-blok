@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Test() {
+export default function TopBar() {
     return (
         <View style={styles.root}>
             <View style={styles.container}>
