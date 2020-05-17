@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import { Divider } from 'react-native-elements';
 import TopBar from '../components/TopBar';
 import BottomBar from '../components/BottomBar';
+import NumPad from '../components/NumPad';
 
 export default function FirstScreen() {
     return (
@@ -22,6 +23,9 @@ export default function FirstScreen() {
                     </View>
                 </View>
             </View>
+            <View style={styles.numPadContainer}>
+                <NumPad/>
+            </View>
             <View>
                 <BottomBar/>
             </View>
@@ -36,7 +40,8 @@ const styles = StyleSheet.create({
     scoreTrackerContainer: {
         display: "flex",
         flexDirection: "column",
-        flexBasis: "25%"
+        flexBasis: "25%",
+        paddingBottom: 5
     },
     row: {
         height: "50%",
@@ -55,5 +60,8 @@ const styles = StyleSheet.create({
     },
     divider: {
         height: 10,
+    },
+    numPadContainer: {
+        paddingBottom: 5
     }
 })
