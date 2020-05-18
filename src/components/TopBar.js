@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements';
 
 export default class TopBar extends React.Component {
     render() {
+        console.log('??', this.props.score);
         return (
             <View style={styles.root}>
                 <View style={styles.container}>
@@ -16,7 +17,7 @@ export default class TopBar extends React.Component {
                     </View>
                 </View>
                 <View style={styles.container}>
-                <Button buttonStyle={styles.button} title={'0' || this.props.score} titleStyle={styles.title}/>
+                <Button buttonStyle={styles.button} title={this.props.score ? this.props.score : '0'} titleStyle={styles.title}/>
                 </View>
             </View>
         )
@@ -24,7 +25,8 @@ export default class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-    teamName: PropTypes.string
+    teamName: PropTypes.string,
+    score: PropTypes.string
 }
 
 const styles = StyleSheet.create({

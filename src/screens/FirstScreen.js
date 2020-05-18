@@ -11,13 +11,13 @@ export default class FirstScreen extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-          input: 0
+          input: ''
         }
     }
 
     handleClick = (number) => {
         console.table('Number', number)
-        this.setState({ input: number })
+        this.setState({ input: this.state.input + number })
       }
     
 
@@ -28,8 +28,8 @@ export default class FirstScreen extends React.Component {
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={styles.row}>
-                        <TopBar teamName={'Mi'} />
-                        <TopBar teamName={'Vi'} />
+                        <TopBar score={input} teamName={'Mi'} />
+                        <TopBar score={input} teamName={'Vi'} />
                     </View>
                     <Divider style={styles.divider} />
                     <View style={styles.row}>

@@ -12,23 +12,23 @@ export default class NumPad extends React.Component {
         return (
             <View style={styles.root}>
                 <View style={styles.container}>
-                    <Button buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("1")} buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("2")} buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("3")} buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
-                    <Button buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("4")} buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("5")} buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("6")} buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
                     <Button onClick={() => this.props.handleClick("7")} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("8")} buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("9")} buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
                     <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronRight} size={45} />} titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
                     <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronLeft} size={45} />} titleStyle={styles.title} />
                 </View>
             </View>
