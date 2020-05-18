@@ -1,21 +1,30 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import PropTypes from 'prop-types';
+import { StyleSheet, Text, View } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Button } from 'react-native-elements';
 
-export default function TopBar() {
-    return (
-        <View style={styles.root}>
-            <View style={styles.container}>
-                <View style={styles.leftColumn}> 
-                    <Text style={styles.text}>Hello</Text>
-                    <Text style={styles.text}>1</Text>
-                    <Text style={styles.text}>2</Text>
+export default class TopBar extends React.Component {
+    render() {
+        return (
+            <View style={styles.root}>
+                <View style={styles.container}>
+                    <View style={styles.leftColumn}>
+                        <Text style={styles.text}>{this.props.teamName}</Text>
+                        <Text style={styles.text}>1</Text>
+                        <Text style={styles.text}>2</Text>
+                    </View>
+                </View>
+                <View style={styles.container}>
+                <Button buttonStyle={styles.button} title="162" titleStyle={styles.title}/>
                 </View>
             </View>
-            <View style={styles.container}>
-                <Text style={styles.bigNumber}>162</Text>
-            </View>
-        </View>
-    )
+        )
+    }
+}
+
+TopBar.propTypes = {
+    teamName: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -36,10 +45,16 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "space-evenly",
     },
-    bigNumber: {
-        fontSize: 72
-    },
     text: {
         fontSize: 16
+    },
+    title: {
+        fontSize: 65,
+        color: 'black'
+    },
+    button: {
+        backgroundColor: 'white',
+        height: hp('12%'),
+        width: wp('37%'),
     }
 })

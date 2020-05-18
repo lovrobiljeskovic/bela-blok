@@ -5,22 +5,23 @@ import TopBar from '../components/TopBar';
 import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Button } from 'react-native-elements';
 
 export default function FirstScreen() {
     return (
         <SafeAreaView style={styles.root}>
             <View style={styles.scoreTrackerContainer}>
                 <View style={styles.row}>
-                    <TopBar />
-                    <TopBar />
+                    <TopBar teamName={'Mi'}/>
+                    <TopBar teamName={'Vi'}/>
                 </View>
                 <Divider style={styles.divider} />
                 <View style={styles.row}>
                     <View style={styles.textContainer}>
-                        <Text style={styles.text}>Igra</Text>
+                    <Button buttonStyle={styles.button} title="Igra" titleStyle={styles.title}/>
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.text}>Zvanje</Text>
+                    <Button buttonStyle={styles.button} title="Zvanje" titleStyle={styles.title}/>
                     </View>
                 </View>
             </View>
@@ -58,9 +59,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    text: {
-        fontSize: 42,
-    },
     divider: {
         height: 10,
     },
@@ -71,5 +69,14 @@ const styles = StyleSheet.create({
     bottomBarContainer: {
         height: hp('20%'),
         width: wp('100%'),
+    },
+    title: {
+        fontSize: 42,
+        color: 'black'
+    },
+    button: {
+        backgroundColor: 'white',
+        height: hp('12%'),
+        width: wp('50%'),
     }
 })
