@@ -12,23 +12,23 @@ export default class NumPad extends React.Component {
         return (
             <View style={styles.root}>
                 <View style={styles.container}>
-                    <Button onClick={() => this.props.handleNumPadClick("1")} buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("2")} buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("3")} buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("1")} buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("2")} buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("3")} buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
-                    <Button onClick={() => this.props.handleNumPadClick("4")} buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("5")} buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("6")} buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("4")} buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("5")} buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("6")} buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
-                    <Button onClick={() => this.props.handleNumPadClick("7")} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("8")} buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("9")} buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("7")} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("8")} buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("9")} buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
                     <Button buttonStyle={styles.numPadButton} title='DELETE ALL' titleStyle={styles.title} />
-                    <Button onClick={() => this.props.handleNumPadClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
+                    <Button onPress={() => this.props.handleNumPadClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
                     <Button buttonStyle={styles.numPadButton}size={45} title='DELETE' titleStyle={styles.title} />
                 </View>
             </View>

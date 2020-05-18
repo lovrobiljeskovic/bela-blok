@@ -5,7 +5,7 @@ import TopBar from '../components/TopBar';
 import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Button } from 'react-native-elements';
+import PointsBar from '../components/PointsBar';
 
 export default class FirstScreen extends React.Component {
     constructor(props) {
@@ -15,16 +15,13 @@ export default class FirstScreen extends React.Component {
             selectedTeam: 'Mi',
             viScore: '',
             selectedPoints: 'Igra',
-            miBonusScore: '0',
-            viBonusScore: '0'
+            miBonusScore: '',
+            viBonusScore: ''
         }
     }
 
     handleNumPadClick = (number) => {
         const { selectedTeam, selectedPoints } = this.state
-        console.table('Number', number)
-        console.log('SELECTED TEAM', selectedTeam);
-        console.log('SELECTED PP', selectedPoints);
         if (selectedTeam === 'Mi') {
             if (selectedPoints === 'Igra') {
                 this.setState({ miScore: this.state.miScore + number})
@@ -42,7 +39,6 @@ export default class FirstScreen extends React.Component {
     }
 
     handleTeamClick = (teamName) => {
-        console.log('im here')
         this.setState({ selectedTeam: teamName })
     }
 
@@ -52,7 +48,8 @@ export default class FirstScreen extends React.Component {
 
 
     render() {
-        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam } = this.state;
+        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam} = this.state;
+        const { isActive } = this.props;
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
@@ -63,10 +60,10 @@ export default class FirstScreen extends React.Component {
                     <Divider style={styles.divider} />
                     <View style={styles.row}>
                         <View style={styles.textContainer}>
-                            <Button onClick={() => this.handlePointsClick('Igra')} buttonStyle={styles.button} title="Igra" titleStyle={styles.title} />
+                            <PointsBar title={'Igra'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints ==='Igra'} selectedPoints={selectedPoints}/>
                         </View>
                         <View style={styles.textContainer}>
-                            <Button onClick={() => this.handlePointsClick('Zvanje')} buttonStyle={styles.button} title="Zvanje" titleStyle={styles.title} />
+                            <PointsBar title={'Zvanje'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints ==='Zvanje'} selectedPoints={selectedPoints}/>
                         </View>
                     </View>
                 </View>
@@ -80,7 +77,6 @@ export default class FirstScreen extends React.Component {
         )
     }
 }
-
 const styles = StyleSheet.create({
     root: {
         height: hp('100%')
@@ -101,6 +97,9 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    selectedTextContainer: {
+        backgroundColor: 'green'
     },
     divider: {
         height: hp('1%')

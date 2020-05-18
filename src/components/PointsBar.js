@@ -3,21 +3,15 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default class TopBar extends React.Component {
+export default class PointsBar extends React.Component {
     render() {
         const { isActive } = this.props;
         return (
-            <TouchableOpacity onPress={() => this.props.handleTeamClick(this.props.teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
-                <View style={styles.container}>
-                    <View style={styles.leftColumn}>
-                        <Text style={styles.text}>{this.props.teamName}</Text>
-                        <Text style={styles.text}>{this.props.bonusPoints ? this.props.bonusPoints : '0'}</Text>
-                    </View>
-                </View>
+            <TouchableOpacity onPress={() => this.props.handlePointsClick(this.props.title)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.container}>
                     <View style={styles.rightColumn}>
                     <Text style={styles.title}>
-                        {this.props.score ? this.props.score : '0'}
+                        {this.props.title }
                     </Text>
                     </View>
                 </View>
@@ -26,14 +20,11 @@ export default class TopBar extends React.Component {
     }
 }
 
-TopBar.propTypes = {
-    teamName: PropTypes.string,
-    score: PropTypes.string,
-    selectedTeam: PropTypes.number,
-    handleTeamClick: PropTypes.func,
+PointsBar.propTypes = {
+    isActive: PropTypes.bool,
+    handlePointsClick: PropTypes.func,
     selectedPoints: PropTypes.string,
-    bonusPoints: PropTypes.string,
-    isActive: PropTypes.bool
+    title: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -50,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     container: {
-        margin: 5,
+        margin: 2,
     },
     leftColumn: {
         display: "flex",
@@ -66,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     title: {
-        fontSize: 40,
+        fontSize: 35,
         color: 'black'
     },
     button: {
