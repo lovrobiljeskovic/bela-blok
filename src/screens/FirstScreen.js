@@ -4,6 +4,7 @@ import { Divider } from 'react-native-elements';
 import TopBar from '../components/TopBar';
 import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function FirstScreen() {
     return (
@@ -26,7 +27,7 @@ export default function FirstScreen() {
             <View style={styles.numPadContainer}>
                 <NumPad/>
             </View>
-            <View>
+            <View style={styles.bottomBarContainer}>
                 <BottomBar/>
             </View>
         </SafeAreaView>
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     scoreTrackerContainer: {
+        height: hp('25%'),
+        width: wp('100%'),
         display: "flex",
         flexDirection: "column",
         flexBasis: "25%",
@@ -62,6 +65,12 @@ const styles = StyleSheet.create({
         height: 10,
     },
     numPadContainer: {
-        paddingBottom: 5
+        paddingBottom: 5,
+        height: hp('45%'),
+        width: wp('100%'),
+    },
+    bottomBarContainer: {
+         height: hp('25%'),
+        width: wp('100%'),
     }
 })
