@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function BottomBar() {
     return (
@@ -24,16 +25,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: 5
     },
     confirmationButton: {
         backgroundColor: 'green',
-        width: 200,
-        height: 50
+        width: wp('65%'),
+        height: hp('15%')
     },
     goBackButton: {
         backgroundColor: 'red',
-        width: 100,
-        height: 50,
+        width: wp('35%'),
+        height: hp('15%')
     }
 })

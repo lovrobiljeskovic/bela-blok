@@ -36,10 +36,10 @@ export default function FirstScreen() {
 
 const styles = StyleSheet.create({
     root: {
-        height: "100%"
+        height: hp('100%')
     },
     scoreTrackerContainer: {
-        height: hp('25%'),
+        height: hp('20%'),
         width: wp('100%'),
         display: "flex",
         flexDirection: "column",
@@ -65,12 +65,11 @@ const styles = StyleSheet.create({
         height: 10,
     },
     numPadContainer: {
-        paddingBottom: 5,
-        height: hp('45%'),
+        height: hp('60%'),
         width: wp('100%'),
     },
     bottomBarContainer: {
-         height: hp('25%'),
+        height: hp('20%'),
         width: wp('100%'),
     }
 })

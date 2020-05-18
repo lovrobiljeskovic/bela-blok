@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function NumPad() {
     return (
@@ -39,19 +40,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "column",
-        padding: 5
     },
     numPadButton: {
         backgroundColor: 'white',
-        width: 200,
-        height: 50,
+        height: hp('15%'),
+        width: wp('33%'),
         borderWidth: 5,
         borderColor: 'black'
-    },
-    goBackButton: {
-        backgroundColor: 'red',
-        width: 100,
-        height: 50,
     },
     container: {
         display: "flex",
