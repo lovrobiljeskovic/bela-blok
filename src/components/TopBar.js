@@ -16,7 +16,7 @@ export default class TopBar extends React.Component {
                     </View>
                 </View>
                 <View style={styles.container}>
-                <Button buttonStyle={styles.button} title="162" titleStyle={styles.title}/>
+                <Button buttonStyle={styles.button} title={'0' || this.props.score} titleStyle={styles.title}/>
                 </View>
             </View>
         )

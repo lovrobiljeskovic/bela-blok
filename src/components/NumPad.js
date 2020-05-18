@@ -4,33 +4,40 @@ import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import PropTypes from 'prop-types';
 
-export default function NumPad() {
-    return (
-        <View style={styles.root}>
-            <View style={styles.container}>
-            <Button buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title}/>
+export default class NumPad extends React.Component {
+    render() {
+        return (
+            <View style={styles.root}>
+                <View style={styles.container}>
+                    <Button buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
+                </View>
+                <View style={styles.container}>
+                    <Button buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
+                </View>
+                <View style={styles.container}>
+                    <Button onClick={this.props.handleClick} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
+                </View>
+                <View style={styles.container}>
+                    <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronRight} size={45} />} titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronLeft} size={45} />} titleStyle={styles.title} />
+                </View>
             </View>
-            <View style={styles.container}>
-            <Button buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title}/>
-            </View>
-            <View style={styles.container}>
-            <Button buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title}/>
-            </View>
-            <View style={styles.container}>
-            <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronRight} size={45}/>} titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title}/>
-            <Button buttonStyle={styles.numPadButton} icon={<FontAwesomeIcon icon={faChevronLeft} size={45}/>} titleStyle={styles.title}/>
-            </View>
-        </View>
-    )
+        )
+    }
+}
+
+NumPad.propTypes = {
+    handleClick: PropTypes.func
 }
 
 const styles = StyleSheet.create({
@@ -43,8 +50,8 @@ const styles = StyleSheet.create({
     },
     numPadButton: {
         backgroundColor: 'white',
-        height: hp('15%'),
-        width: wp('33%'),
+        height: hp('60%') / 4,
+        width: wp('100%') / 3,
         borderWidth: 5,
         borderColor: 'black'
     },
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: "row",  
+        flexDirection: "row",
     },
     title: {
         fontSize: 50,
