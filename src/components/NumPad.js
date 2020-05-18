@@ -52,9 +52,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         width: 100,
         height: 50,
-        svg: {
-            fill: '#FFFFFF'
-        }
     },
     container: {
         display: "flex",
