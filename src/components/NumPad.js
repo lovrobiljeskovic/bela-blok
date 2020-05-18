@@ -22,7 +22,7 @@ export default class NumPad extends React.Component {
                     <Button buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
-                    <Button onClick={this.props.handleClick} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
+                    <Button onClick={() => this.props.handleClick("7")} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
                     <Button buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
                     <Button buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
                 </View>

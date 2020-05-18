@@ -15,12 +15,10 @@ export default class FirstScreen extends React.Component {
         }
     }
 
-    handleClick(event) {
-        console.log('I GO HERE');
-        console.log('EVENT TARGET VALUE', event.target.title);
-        event.preventDefault();
-        this.setState({ input: event.target.value });
-      };
+    handleClick = (number) => {
+        console.table('Number', number)
+        this.setState({ input: number })
+      }
     
 
     render() {
@@ -44,7 +42,7 @@ export default class FirstScreen extends React.Component {
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad handleClick={this.handleClick.bind(this)}/>
+                    <NumPad handleClick={this.handleClick}/>
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <BottomBar />
