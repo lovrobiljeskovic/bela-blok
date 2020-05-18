@@ -2,22 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Button } from 'react-native-elements';
 
 export default class TopBar extends React.Component {
     render() {
+        const { isActive } = this.props;
+        console.log('isActive', isActive);
         console.log('??', this.props.score);
         return (
-            <View style={styles.root}>
+            <View onClick={() => this.props.handleTeamClick(this.props.teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.container}>
                     <View style={styles.leftColumn}>
                         <Text style={styles.text}>{this.props.teamName}</Text>
-                        <Text style={styles.text}>1</Text>
-                        <Text style={styles.text}>2</Text>
+                        <Text style={styles.text}>{this.props.bonusPoints}</Text>
                     </View>
                 </View>
                 <View style={styles.container}>
-                <Button buttonStyle={styles.button} title={this.props.score ? this.props.score : '0'} titleStyle={styles.title}/>
+                    <View style={styles.rightColumn}>
+                    <Text style={styles.title}>
+                        {this.props.score ? this.props.score : '0'}
+                    </Text>
+                    </View>
                 </View>
             </View>
         )
@@ -26,7 +30,12 @@ export default class TopBar extends React.Component {
 
 TopBar.propTypes = {
     teamName: PropTypes.string,
-    score: PropTypes.string
+    score: PropTypes.string,
+    selectedTeam: PropTypes.number,
+    handleTeamClick: PropTypes.func,
+    selectedPoints: PropTypes.string,
+    bonusPoints: PropTypes.string,
+    isActive: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
@@ -36,16 +45,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: 5
+        padding: 5,
+        width: wp('50%'),
+    },
+    selectedRoot: {
+        backgroundColor: 'green'
     },
     container: {
-        margin: 5
+        margin: 5,
     },
     leftColumn: {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
         justifyContent: "space-evenly",
+        width: wp('10%')
+    },
+    rightColumn: {
+        width: wp('30%')
     },
     text: {
         fontSize: 16
@@ -57,6 +74,9 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'white',
         height: hp('12%'),
-        width: wp('37%'),
+        width: wp('40%'),
+    },
+    selectedButton: {
+        backgroundColor: 'green'
     }
 })

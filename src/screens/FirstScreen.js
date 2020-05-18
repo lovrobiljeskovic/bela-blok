@@ -8,41 +8,70 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { Button } from 'react-native-elements';
 
 export default class FirstScreen extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
         this.state = {
-          input: ''
+            miScore: '',
+            selectedTeam: 'Mi',
+            viScore: '',
+            selectedPoints: 'Igra',
+            miBonusScore: '0',
+            viBonusScore: '0'
         }
     }
 
-    handleClick = (number) => {
+    handleNumPadClick = (number) => {
+        const { selectedTeam, selectedPoints } = this.state
         console.table('Number', number)
-        this.setState({ input: this.state.input + number })
-      }
-    
+        console.log('SELECTED TEAM', selectedTeam);
+        console.log('SELECTED PP', selectedPoints);
+        if (selectedTeam === 'Mi') {
+            if (selectedPoints === 'Igra') {
+                this.setState({ miScore: this.state.miScore + number})
+            } else {
+                this.setState({ miBonusScore: this.state.miBonusScore + number })
+            }
+        } else if (selectedTeam === 'Vi') {
+            if (selectedPoints === 'Igra') {
+                this.setState({ viScore: this.state.viScore + number })
+            } else {
+                this.setState({ viBonusScore: this.state.viBonusScore + number })
+            }
+
+        }
+    }
+
+    handleTeamClick = (teamName) => {
+        console.log('im here')
+        this.setState({ selectedTeam: teamName })
+    }
+
+    handlePointsClick = (pointsType) => {
+        this.setState({ selectedPoints: pointsType })
+    }
+
 
     render() {
-        const { input } = this.state;
-        console.log("INPUT", input);
+        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam } = this.state;
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={styles.row}>
-                        <TopBar score={input} teamName={'Mi'} />
-                        <TopBar score={input} teamName={'Vi'} />
+                        <TopBar isActive={selectedTeam === 'Mi'} bonusPoints={miBonusScore} selectedPoints={selectedPoints} handleTeamClick={this.handleTeamClick} score={miScore} teamName={'Mi'} />
+                        <TopBar isActive={selectedTeam === 'Vi'} bonusPoints={viBonusScore} selectedPoints={selectedPoints} handleTeamClick={this.handleTeamClick} score={viScore} teamName={'Vi'} />
                     </View>
                     <Divider style={styles.divider} />
                     <View style={styles.row}>
                         <View style={styles.textContainer}>
-                            <Button buttonStyle={styles.button} title="Igra" titleStyle={styles.title} />
+                            <Button onClick={() => this.handlePointsClick('Igra')} buttonStyle={styles.button} title="Igra" titleStyle={styles.title} />
                         </View>
                         <View style={styles.textContainer}>
-                            <Button buttonStyle={styles.button} title="Zvanje" titleStyle={styles.title} />
+                            <Button onClick={() => this.handlePointsClick('Zvanje')} buttonStyle={styles.button} title="Zvanje" titleStyle={styles.title} />
                         </View>
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad handleClick={this.handleClick}/>
+                    <NumPad handleNumPadClick={this.handleNumPadClick} />
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <BottomBar />
@@ -61,30 +90,27 @@ const styles = StyleSheet.create({
         width: wp('100%'),
         display: "flex",
         flexDirection: "column",
-        flexBasis: "25%",
-        paddingBottom: 5
     },
     row: {
-        height: "50%",
+        height: hp('9.5%'),
         display: "flex",
         flexDirection: "row",
         justifyContent: "center"
     },
     textContainer: {
-        flexBasis: "50%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
     },
     divider: {
-        height: 10,
+        height: hp('1%')
     },
     numPadContainer: {
-        height: hp('60%'),
+        height: hp('65%'),
         width: wp('100%'),
     },
     bottomBarContainer: {
-        height: hp('20%'),
+        height: hp('15%'),
         width: wp('100%'),
     },
     title: {
@@ -93,7 +119,6 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'white',
-        height: hp('12%'),
         width: wp('50%'),
     }
 })
