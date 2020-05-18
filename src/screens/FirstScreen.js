@@ -12,8 +12,8 @@ export default class FirstScreen extends React.Component {
         super(props)
         this.state = {
             miScore: '',
-            selectedTeam: 'Mi',
             viScore: '',
+            selectedTeam: 'Mi',
             selectedPoints: 'Igra',
             miBonusScore: '',
             viBonusScore: ''
@@ -46,10 +46,18 @@ export default class FirstScreen extends React.Component {
         this.setState({ selectedPoints: pointsType })
     }
 
+    deleteAll = () => {
+        const { selectedTeam } = this.state
+        if (selectedTeam === 'Mi') {
+                this.setState({ miScore: '', miBonusScore: ''})
+            } else {
+                this.setState({ viScore: '', viBonusScore: '' })
+            }
+    }
+
 
     render() {
         const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam} = this.state;
-        const { isActive } = this.props;
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
@@ -59,16 +67,12 @@ export default class FirstScreen extends React.Component {
                     </View>
                     <Divider style={styles.divider} />
                     <View style={styles.row}>
-                        <View style={styles.textContainer}>
                             <PointsBar title={'Igra'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints ==='Igra'} selectedPoints={selectedPoints}/>
-                        </View>
-                        <View style={styles.textContainer}>
                             <PointsBar title={'Zvanje'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints ==='Zvanje'} selectedPoints={selectedPoints}/>
-                        </View>
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad handleNumPadClick={this.handleNumPadClick} />
+                    <NumPad deleteAll={this.deleteAll} handleNumPadClick={this.handleNumPadClick} />
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <BottomBar />
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     divider: {
-        height: hp('1%')
+        height: hp('1%'),
     },
     numPadContainer: {
         height: hp('65%'),

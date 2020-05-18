@@ -1,9 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import PropTypes from 'prop-types';
 
@@ -27,9 +24,9 @@ export default class NumPad extends React.Component {
                     <Button onPress={() => this.props.handleNumPadClick("9")} buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
                 </View>
                 <View style={styles.container}>
-                    <Button buttonStyle={styles.numPadButton} title='DELETE ALL' titleStyle={styles.title} />
+                    <Button onPress={() => this.props.deleteAll()} buttonStyle={styles.numPadButton} title='Izbriši sve' titleStyle={styles.title} />
                     <Button onPress={() => this.props.handleNumPadClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton}size={45} title='DELETE' titleStyle={styles.title} />
+                    <Button buttonStyle={styles.numPadButton} title='Izbriši zadnji unos' titleStyle={styles.delTitle} />
                 </View>
             </View>
         )
@@ -37,7 +34,8 @@ export default class NumPad extends React.Component {
 }
 
 NumPad.propTypes = {
-    handleNumPadClick: PropTypes.func
+    handleNumPadClick: PropTypes.func,
+    deleteAll: PropTypes.func
 }
 
 const styles = StyleSheet.create({
@@ -63,7 +61,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     title: {
-        fontSize: 50,
+        fontSize: 30,
+        color: 'black'
+    },
+    delTitle: {
+        fontSize: 20,
         color: 'black'
     }
 })
