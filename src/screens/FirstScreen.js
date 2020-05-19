@@ -6,95 +6,29 @@ import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import PointsBar from '../components/PointsBar';
+import PropTypes from 'prop-types';
 
 export default class FirstScreen extends React.Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            miScore: '',
-            viScore: '',
-            selectedTeam: 'Mi',
-            selectedPoints: 'Igra',
-            miBonusScore: '',
-            viBonusScore: ''
-        }
-    }
-
-    handleNumPadClick = (number) => {
-        const { selectedTeam, selectedPoints } = this.state
-
-        if (selectedTeam === 'Mi') {
-            if (selectedPoints === 'Igra') {
-                this.setState({ miScore: this.state.miScore + number })
-            } else {
-                this.setState({ miBonusScore: this.state.miBonusScore + number })
-            }
-        } else if (selectedTeam === 'Vi') {
-            if (selectedPoints === 'Igra') {
-                this.setState({ viScore: this.state.viScore + number })
-            } else {
-                this.setState({ viBonusScore: this.state.viBonusScore + number })
-            }
-
-        }
-    }
-
-    handleTeamClick = (teamName) => {
-        this.setState({ selectedTeam: teamName })
-    }
-
-    handlePointsClick = (pointsType) => {
-        this.setState({ selectedPoints: pointsType })
-    }
-
-    handleDeleteAll = () => {
-        const { selectedTeam } = this.state
-
-        if (selectedTeam === 'Mi') {
-            this.setState({ miScore: '', miBonusScore: '' })
-        } else {
-            this.setState({ viScore: '', viBonusScore: '' })
-        }
-    }
-
-    handleDeleteLastInput = () => {
-        const { selectedTeam, selectedPoints } = this.state
-        
-        if (selectedTeam === 'Mi') {
-            if (selectedPoints === 'Igra') {
-                this.setState({ miScore: this.state.miScore.slice(0, - 1) })
-            } else {
-                this.setState({ miBonusScore: this.state.miBonusScore.slice(0, - 1) })
-            }
-        } else if (selectedTeam === 'Vi') {
-            if (selectedPoints === 'Igra') {
-                this.setState({ viScore: this.state.viScore.slice(0, - 1) })
-            } else {
-                this.setState({ viBonusScore: this.state.viBonusScore.slice(0, - 1) })
-            }
-
-        }
-    }
 
     render() {
-        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam } = this.state;
-        
+        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam, handlePointsClick, handleTeamClick, handleDeleteAll, handleDeleteLastInput, handleNumPadClick } = this.props;
+        console.log('HELLO', this.props);
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={styles.row}>
-                        <TopBar isActive={selectedTeam === 'Mi'} bonusPoints={miBonusScore} selectedPoints={selectedPoints} handleTeamClick={this.handleTeamClick} score={miScore} teamName={'Mi'} />
-                        <TopBar isActive={selectedTeam === 'Vi'} bonusPoints={viBonusScore} selectedPoints={selectedPoints} handleTeamClick={this.handleTeamClick} score={viScore} teamName={'Vi'} />
+                        <TopBar isActive={selectedTeam === 'Mi'} bonusPoints={miBonusScore} selectedPoints={selectedPoints} handleTeamClick={handleTeamClick} score={miScore} teamName={'Mi'} />
+                        <TopBar isActive={selectedTeam === 'Vi'} bonusPoints={viBonusScore} selectedPoints={selectedPoints} handleTeamClick={handleTeamClick} score={viScore} teamName={'Vi'} />
                     </View>
                     <Divider style={styles.divider} />
                     <View style={styles.row}>
-                        <PointsBar title={'Igra'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints === 'Igra'} selectedPoints={selectedPoints} />
-                        <PointsBar title={'Zvanje'} handlePointsClick={this.handlePointsClick} isActive={selectedPoints === 'Zvanje'} selectedPoints={selectedPoints} />
+                        <PointsBar title={'Igra'} handlePointsClick={handlePointsClick} isActive={selectedPoints === 'Igra'} selectedPoints={selectedPoints} />
+                        <PointsBar title={'Zvanje'} handlePointsClick={handlePointsClick} isActive={selectedPoints === 'Zvanje'} selectedPoints={selectedPoints} />
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad handleDeleteLastInput={this.handleDeleteLastInput} handleDeleteAll={this.handleDeleteAll} handleNumPadClick={this.handleNumPadClick} />
+                    <NumPad handleDeleteLastInput={handleDeleteLastInput} handleDeleteAll={handleDeleteAll} handleNumPadClick={handleNumPadClick} />
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <BottomBar navigation={this.props.navigation} />
@@ -102,6 +36,19 @@ export default class FirstScreen extends React.Component {
             </SafeAreaView>
         )
     }
+}
+
+FirstScreen.propTypes = {
+    miScore: PropTypes.string,
+    viScore: PropTypes.string,
+    selectedPoints: PropTypes.string,
+    miBonusScore: PropTypes.string,
+    viBonusScore: PropTypes.string,
+    handlePointsClick: PropTypes.func,
+    handleTeamClick: PropTypes.func,
+    handleDeleteAll: PropTypes.func,
+    handleDeleteLastInput: PropTypes.func,
+    handleNumPadClick: PropTypes.func,
 }
 
 const styles = StyleSheet.create({
