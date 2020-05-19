@@ -82,8 +82,8 @@ export default class App extends React.Component {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="FirstScreen">
-                <Stack.Screen name="FirstScreen" render={<FirstScreen handleDeleteAll={this.handleDeleteAll}handlePointsClick={this.handlePointsClick} handleTeamClick={this.handleTeamClick}handleNumPadClick={this.handleNumPadClick} miScore={miScore} viScore={viScore} selectedTeam={selectedTeam} selectedPoints={selectedPoints} miBonusScore={miBonusScore} viBonusScore={viBonusScore}/>} />
-                <Stack.Screen name="SecondScreen" render={SecondScreen} />
+                <Stack.Screen name="FirstScreen" component={() => <FirstScreen handleDeleteAll={this.handleDeleteAll} handlePointsClick={this.handlePointsClick} handleTeamClick={this.handleTeamClick} handleNumPadClick={this.handleNumPadClick} miScore={miScore} viScore={viScore} selectedTeam={selectedTeam} selectedPoints={selectedPoints} miBonusScore={miBonusScore} viBonusScore={viBonusScore}/>} />
+                <Stack.Screen name="SecondScreen" component={() => <SecondScreen />} />
             </Stack.Navigator>
         </NavigationContainer>
     )
