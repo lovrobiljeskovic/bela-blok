@@ -5,15 +5,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default class PointsBar extends React.Component {
     render() {
-        const { isActive } = this.props;
+        const { isActive, title, handlePointsClick } = this.props
+
         return (
-            <TouchableOpacity onPress={() => this.props.handlePointsClick(this.props.title)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
+            <TouchableOpacity onPress={() => handlePointsClick(title)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.container}>
-                    <View style={styles.rightColumn}>
                     <Text style={styles.title}>
-                        {this.props.title }
+                        {title}
                     </Text>
-                    </View>
                 </View>
             </TouchableOpacity>
         )
@@ -34,38 +33,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: 5,
+        height: hp("9.5%"),
         width: wp('50%'),
     },
     selectedRoot: {
         backgroundColor: 'rgba(63, 195, 128, 1)'
     },
     container: {
-        margin: 2,
+
     },
-    leftColumn: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "space-evenly",
-        width: wp('10%')
-    },
-    rightColumn: {
+    titleContainer: {
         width: wp('30%')
     },
-    text: {
-        fontSize: 16
-    },
     title: {
-        fontSize: 35,
+        fontSize: 32,
         color: 'black'
     },
-    button: {
-        backgroundColor: 'white',
-        height: hp('12%'),
-        width: wp('40%'),
-    },
-    selectedButton: {
-        backgroundColor: 'green'
-    }
 })

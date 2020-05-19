@@ -5,20 +5,25 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default class TopBar extends React.Component {
     render() {
-        const { isActive } = this.props;
+        const { isActive, bonusPoints, score, teamName, handleTeamClick } = this.props;
+
         return (
-            <TouchableOpacity onPress={() => this.props.handleTeamClick(this.props.teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
+            <TouchableOpacity onPress={() => handleTeamClick(teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.container}>
                     <View style={styles.leftColumn}>
-                        <Text style={styles.text}>{this.props.teamName}</Text>
-                        <Text style={styles.text}>{this.props.bonusPoints ? this.props.bonusPoints : '0'}</Text>
+                        <Text style={styles.text}>
+                            {teamName}
+                        </Text>
+                        <Text style={styles.text}>
+                            {bonusPoints || '0'}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.rightColumn}>
-                    <Text style={styles.title}>
-                        {this.props.score ? this.props.score : '0'}
-                    </Text>
+                        <Text style={styles.title}>
+                            {score || '0'}
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -43,38 +48,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: 5,
+        height: hp("9.5%"),
         width: wp('50%'),
     },
     selectedRoot: {
         backgroundColor: 'rgba(63, 195, 128, 1)'
     },
     container: {
-        margin: 5,
     },
     leftColumn: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "space-evenly",
-        width: wp('10%')
+        width: wp('10%'),
+        paddingLeft: wp("1%"), 
+        paddingRight: wp("1%"), 
+        paddingTop: hp("1%"),
+        paddingBottom: hp("1%")
     },
     rightColumn: {
-        width: wp('30%')
+        width: wp('40%'),
+        paddingLeft: wp("1%"), 
+        paddingRight: wp("1%"), 
+        paddingTop: hp("1%"),
+        paddingBottom: hp("1%")
     },
     text: {
-        fontSize: 16
+        fontSize: 16,
     },
     title: {
-        fontSize: 40,
-        color: 'black'
-    },
-    button: {
-        backgroundColor: 'white',
-        height: hp('12%'),
-        width: wp('40%'),
-    },
-    selectedButton: {
-        backgroundColor: 'green'
+        fontSize: 32,
+        color: 'black',
+        textAlign: "right"
     }
 })
