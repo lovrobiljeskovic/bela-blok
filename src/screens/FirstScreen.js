@@ -55,6 +55,23 @@ export default class FirstScreen extends React.Component {
             }
     }
 
+    deleteLastInput = () => {
+        const { selectedTeam, selectedPoints } = this.state
+        if (selectedTeam === 'Mi') {
+            if (selectedPoints === 'Igra') {
+                this.setState({ miScore: this.state.miScore.slice(0,- 1)})
+            } else {
+                this.setState({ miBonusScore: this.state.miBonusScore.slice(0,- 1)})
+            }
+        } else if (selectedTeam === 'Vi') {
+            if (selectedPoints === 'Igra') {
+                this.setState({ viScore: this.state.viScore.slice(0,- 1)})
+            } else {
+                this.setState({ viBonusScore: this.state.viBonusScore.slice(0,- 1)})
+            }
+
+        }
+    }
 
     render() {
         const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam} = this.state;
@@ -72,10 +89,10 @@ export default class FirstScreen extends React.Component {
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad deleteAll={this.deleteAll} handleNumPadClick={this.handleNumPadClick} />
+                    <NumPad deleteLastInput={this.deleteLastInput} deleteAll={this.deleteAll} handleNumPadClick={this.handleNumPadClick} />
                 </View>
                 <View style={styles.bottomBarContainer}>
-                    <BottomBar />
+                    <BottomBar navigation={this.props.navigation} />
                 </View>
             </SafeAreaView>
         )
@@ -103,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     selectedTextContainer: {
-        backgroundColor: 'green'
+        backgroundColor: 'rgba(63, 195, 128, 1)'
     },
     divider: {
         height: hp('1%'),

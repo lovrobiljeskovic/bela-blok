@@ -26,7 +26,7 @@ export default class NumPad extends React.Component {
                 <View style={styles.container}>
                     <Button onPress={() => this.props.deleteAll()} buttonStyle={styles.numPadButton} title='Izbriši sve' titleStyle={styles.title} />
                     <Button onPress={() => this.props.handleNumPadClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
-                    <Button buttonStyle={styles.numPadButton} title='Izbriši zadnji unos' titleStyle={styles.delTitle} />
+                    <Button onPress={() => this.props.deleteLastInput()} buttonStyle={styles.numPadButton} title='Izbriši zadnji unos' titleStyle={styles.delTitle} />
                 </View>
             </View>
         )
@@ -35,7 +35,8 @@ export default class NumPad extends React.Component {
 
 NumPad.propTypes = {
     handleNumPadClick: PropTypes.func,
-    deleteAll: PropTypes.func
+    deleteAll: PropTypes.func,
+    deleteLastInput: PropTypes.func
 }
 
 const styles = StyleSheet.create({

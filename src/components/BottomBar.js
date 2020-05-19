@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -7,17 +8,22 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default class BottomBar extends React.Component {
     render() {
+        console.log('NAV', this.props.navigation);
         return (
             <View style={styles.root}>
                 <View style={styles.container}>
-                    <Button icon={<FontAwesomeIcon icon={faChevronLeft} color='white' size={30} />} buttonStyle={styles.goBackButton} />
+                    <Button onPress={() => this.props.navigation.navigate('SecondScreen')} icon={<FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />} buttonStyle={styles.goBackButton} />
                 </View>
                 <View style={styles.container}>
-                    <Button buttonStyle={styles.confirmationButton} title="Potvrdi" />
+                    <Button buttonStyle={styles.confirmationButton} title="Potvrdi" titleStyle={styles.title}/>
                 </View>
             </View>
         )
     }
+}
+
+BottomBar.propTypes = {
+    navigation: PropTypes.any
 }
 
 const styles = StyleSheet.create({
@@ -34,8 +40,11 @@ const styles = StyleSheet.create({
         height: hp('15%')
     },
     goBackButton: {
-        backgroundColor: 'red',
+        backgroundColor: 'rgba(207, 0, 15, 1)',
         width: wp('35%'),
         height: hp('15%')
+    },
+    title: {
+        fontSize: 35
     }
 })

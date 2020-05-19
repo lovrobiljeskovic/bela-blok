@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         width: wp('50%'),
     },
     selectedRoot: {
-        backgroundColor: 'green'
+        backgroundColor: 'rgba(63, 195, 128, 1)'
     },
     container: {
         margin: 2,
