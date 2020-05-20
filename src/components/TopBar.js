@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import PropTypes from 'prop-types'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { scale, moderateScale } from "../utils/scalingUtils"
 
 export default class TopBar extends React.Component {
     render() {
@@ -9,22 +9,18 @@ export default class TopBar extends React.Component {
 
         return (
             <TouchableOpacity onPress={() => handleTeamClick(teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
-                <View style={styles.container}>
-                    <View style={styles.leftColumn}>
-                        <Text style={styles.text}>
-                            {teamName}
-                        </Text>
-                        <Text style={styles.text}>
-                            {bonusPoints || '0'}
-                        </Text>
-                    </View>
+                <View style={styles.leftColumn}>
+                    <Text style={styles.text}>
+                        {teamName}
+                    </Text>
+                    <Text style={styles.text}>
+                        {bonusPoints || '0'}
+                    </Text>
                 </View>
-                <View style={styles.container}>
-                    <View style={styles.rightColumn}>
-                        <Text style={styles.title}>
-                            {score || '0'}
-                        </Text>
-                    </View>
+                <View style={styles.scoreContainer}>
+                    <Text style={styles.title}>
+                        {score || '0'}
+                    </Text>
                 </View>
             </TouchableOpacity>
         )
@@ -43,38 +39,27 @@ TopBar.propTypes = {
 
 const styles = StyleSheet.create({
     root: {
-        display: "flex",
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        height: hp("9.5%"),
-        width: wp('50%'),
+        padding: scale(8)
     },
     selectedRoot: {
         backgroundColor: 'rgba(63, 195, 128, 1)'
     },
-    container: {
-    },
     leftColumn: {
-        width: wp('10%'),
-        paddingLeft: wp("1%"), 
-        paddingRight: wp("1%"), 
-        paddingTop: hp("1%"),
-        paddingBottom: hp("1%")
+        flex: 1
     },
-    rightColumn: {
-        width: wp('40%'),
-        paddingLeft: wp("1%"), 
-        paddingRight: wp("1%"), 
-        paddingTop: hp("1%"),
-        paddingBottom: hp("1%")
+    scoreContainer: {
+        flex: 3
     },
     text: {
-        fontSize: 16,
+        fontSize: moderateScale(16, 0.25),
     },
     title: {
-        fontSize: 32,
+        fontSize: moderateScale(32, 0.25),
         color: 'black',
         textAlign: "right"
     }

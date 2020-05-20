@@ -4,10 +4,8 @@ import { Divider } from 'react-native-elements';
 import TopBar from '../components/TopBar';
 import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
-import { useNavigation } from '@react-navigation/native';
 
 
 export default class FirstScreen extends React.Component {
@@ -17,21 +15,27 @@ export default class FirstScreen extends React.Component {
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
-                    <View style={styles.row}>
+                    <View style={[styles.row, { flex: 20 }]}>
                         <TopBar isActive={selectedTeam === 'Mi'} bonusPoints={miBonusScore} selectedPoints={selectedPoints} handleTeamClick={handleTeamClick} score={miScore} teamName={'Mi'} />
                         <TopBar isActive={selectedTeam === 'Vi'} bonusPoints={viBonusScore} selectedPoints={selectedPoints} handleTeamClick={handleTeamClick} score={viScore} teamName={'Vi'} />
                     </View>
-                    <Divider style={styles.divider} />
-                    <View style={styles.row}>
+                    <View style={styles.dividerContainer}>
+                        <Divider />
+                    </View>
+                    <View style={[styles.row, { flex: 20 }]}>
                         <PointsBar title={'Igra'} handlePointsClick={handlePointsClick} isActive={selectedPoints === 'Igra'} selectedPoints={selectedPoints} />
                         <PointsBar title={'Zvanje'} handlePointsClick={handlePointsClick} isActive={selectedPoints === 'Zvanje'} selectedPoints={selectedPoints} />
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <NumPad handleDeleteLastInput={handleDeleteLastInput} handleDeleteAll={handleDeleteAll} handleNumPadClick={handleNumPadClick} />
+                    <View style={[styles.row, { flex: 1 }]}>
+                        <NumPad handleDeleteLastInput={handleDeleteLastInput} handleDeleteAll={handleDeleteAll} handleNumPadClick={handleNumPadClick} />
+                    </View>
                 </View>
                 <View style={styles.bottomBarContainer}>
-                    <BottomBar navigation={navigation} />
+                    <View style={[styles.row, { flex: 1 }]}>
+                        <BottomBar navigation={navigation} />
+                    </View>
                 </View>
             </SafeAreaView>
         )
@@ -53,29 +57,23 @@ FirstScreen.propTypes = {
 
 const styles = StyleSheet.create({
     root: {
-        height: hp('100%')
+        flex: 1,
     },
     scoreTrackerContainer: {
-        height: hp('20%'),
-        width: wp('100%'),
-        display: "flex",
-        flexDirection: "column",
+        flex: 30,
+        flexDirection: "column"
     },
     row: {
-        height: hp('9.5%'),
-        display: "flex",
         flexDirection: "row",
         justifyContent: "center"
     },
-    divider: {
-        height: hp('1%'),
+    dividerContainer: {
+        flex: 1
     },
     numPadContainer: {
-        height: hp('65%'),
-        width: wp('100%'),
+        flex: 100,
     },
     bottomBarContainer: {
-        height: hp('15%'),
-        width: wp('100%'),
+        flex: 20
     },
 })

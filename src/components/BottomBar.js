@@ -4,7 +4,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { scale, moderateScale } from "../utils/scalingUtils"
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class BottomBar extends React.Component {
     render() {
@@ -12,11 +13,15 @@ export default class BottomBar extends React.Component {
 
         return (
             <View style={styles.root}>
-                <View style={styles.container}>
-                    <Button onPress={() => navigation.navigate('SecondScreen')} icon={<FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />} buttonStyle={styles.goBackButton} />
+                <View style={styles.goBackButtonContainer}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SecondScreen')} style={styles.goBackButton}>
+                        <FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.container}>
-                    <Button buttonStyle={styles.confirmationButton} title="Potvrdi" titleStyle={styles.title} />
+                <View style={styles.confirmationButtonContainer}>
+                    <TouchableOpacity style={styles.confirmationButton}>
+                        <Text style={styles.title}>Potvrdi</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -29,21 +34,25 @@ BottomBar.propTypes = {
 
 const styles = StyleSheet.create({
     root: {
-        display: "flex",
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
     },
-    confirmationButton: {
-        backgroundColor: 'green',
-        width: wp('65%'),
-        height: hp('15%')
+    goBackButtonContainer: {
+        flex: 2,
     },
     goBackButton: {
+        flexGrow: 1,
         backgroundColor: 'rgba(207, 0, 15, 1)',
-        width: wp('35%'),
-        height: hp('15%')
+    },
+    confirmationButtonContainer: {
+        flex: 4
+    },
+    confirmationButton: {
+        flex: 1,
+        backgroundColor: 'green',
     },
     title: {
         fontSize: 36

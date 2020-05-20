@@ -84,7 +84,7 @@ export default class App extends React.Component {
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="FirstScreen">
                     <Stack.Screen name="FirstScreen">
-                        {(props) => <FirstScreen {...props} handleDeleteAll={this.handleDeleteAll} handlePointsClick={this.handlePointsClick} handleTeamClick={this.handleTeamClick} handleNumPadClick={this.handleNumPadClick} miScore={miScore} viScore={viScore} selectedTeam={selectedTeam} selectedPoints={selectedPoints} miBonusScore={miBonusScore} viBonusScore={viBonusScore} />}
+                        {(props) => <FirstScreen {...props} handleDeleteLastInput={this.handleDeleteLastInput} handleDeleteAll={this.handleDeleteAll} handlePointsClick={this.handlePointsClick} handleTeamClick={this.handleTeamClick} handleNumPadClick={this.handleNumPadClick} miScore={miScore} viScore={viScore} selectedTeam={selectedTeam} selectedPoints={selectedPoints} miBonusScore={miBonusScore} viBonusScore={viBonusScore} />}
                     </Stack.Screen>
                     <Stack.Screen name="SecondScreen">
                         {(props) => <SecondScreen {...props} />}
@@ -94,13 +94,3 @@ export default class App extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
-

@@ -1,7 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Button } from 'react-native-elements';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { scale, moderateScale } from "../utils/scalingUtils"
 import PropTypes from 'prop-types';
 
 export default class NumPad extends React.Component {
@@ -11,24 +10,72 @@ export default class NumPad extends React.Component {
         return (
             <View style={styles.root}>
                 <View style={styles.container}>
-                    <Button onPress={() => handleNumPadClick("1")} buttonStyle={styles.numPadButton} title="1" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("2")} buttonStyle={styles.numPadButton} title="2" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("3")} buttonStyle={styles.numPadButton} title="3" titleStyle={styles.title} />
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>1</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>2</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>3</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.container}>
-                    <Button onPress={() => handleNumPadClick("4")} buttonStyle={styles.numPadButton} title="4" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("5")} buttonStyle={styles.numPadButton} title="5" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("6")} buttonStyle={styles.numPadButton} title="6" titleStyle={styles.title} />
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>4</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>5</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>6</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.container}>
-                    <Button onPress={() => handleNumPadClick("7")} buttonStyle={styles.numPadButton} title="7" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("8")} buttonStyle={styles.numPadButton} title="8" titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("9")} buttonStyle={styles.numPadButton} title="9" titleStyle={styles.title} />
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>7</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>8</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>9</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.container}>
-                    <Button onPress={() => handleDeleteAll()} buttonStyle={styles.numPadButton} title='Izbriši sve' titleStyle={styles.title} />
-                    <Button onPress={() => handleNumPadClick("0")} buttonStyle={styles.numPadButton} title="0" titleStyle={styles.title} />
-                    <Button onPress={() => handleDeleteLastInput()} buttonStyle={styles.numPadButton} title='Izbriši zadnji unos' titleStyle={styles.delTitle} />
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleDeleteAll()} style={styles.numPadButton}>
+                            <Text style={styles.title}>Izbriši sve</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleNumPadClick("1")} style={styles.numPadButton}>
+                            <Text style={styles.title}>0</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleDeleteLastInput()} style={styles.numPadButton}>
+                            <Text style={styles.delTitle}>Izbriši zadnji unos</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
@@ -43,32 +90,53 @@ NumPad.propTypes = {
 
 const styles = StyleSheet.create({
     root: {
-        display: "flex",
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "column",
-    },
-    numPadButton: {
-        backgroundColor: 'white',
-        height: hp('65%') / 4,
-        width: wp('100%') / 3,
-        borderWidth: 5,
-        borderColor: 'black'
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: "black",
+        borderTopColor: "black"
     },
     container: {
-        display: "flex",
+        flex: 1,
+        width: "100%",
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
     },
+    buttonContainer: {
+        flex: 1,
+        height: "100%",
+        flexDirection: "column",
+    },
+    numPadButton: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'white',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 5,
+        borderColor: 'black',
+        margin: scale(4)
+    },
     title: {
-        fontSize: 30,
-        color: 'black'
+        fontSize: moderateScale(30, 0.25),
+        color: 'black',
+        textAlign: "center"
     },
     delTitle: {
-        fontSize: 20,
-        color: 'black'
+        fontSize: moderateScale(20, 0.25),
+        color: 'black',
+        textAlign: "center"
     }
 })
