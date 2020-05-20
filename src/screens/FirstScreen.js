@@ -7,13 +7,13 @@ import NumPad from '../components/NumPad';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default class FirstScreen extends React.Component {
-
-
     render() {
-        const { miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam, handlePointsClick, handleTeamClick, handleDeleteAll, handleDeleteLastInput, handleNumPadClick } = this.props;
-        console.log('HELLO', this.props);
+        const { navigation, miScore, viScore, selectedPoints, miBonusScore, viBonusScore, selectedTeam, handlePointsClick, handleTeamClick, handleDeleteAll, handleDeleteLastInput, handleNumPadClick } = this.props;
+
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
@@ -31,7 +31,7 @@ export default class FirstScreen extends React.Component {
                     <NumPad handleDeleteLastInput={handleDeleteLastInput} handleDeleteAll={handleDeleteAll} handleNumPadClick={handleNumPadClick} />
                 </View>
                 <View style={styles.bottomBarContainer}>
-                    <BottomBar navigation={this.props.navigation} />
+                    <BottomBar navigation={navigation} />
                 </View>
             </SafeAreaView>
         )
