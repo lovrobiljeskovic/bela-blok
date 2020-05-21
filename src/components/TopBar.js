@@ -2,19 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { scale, moderateScale } from "../utils/scalingUtils"
+import compose from "recompose/compose"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import { setSelectedTeam } from "../actions/actions"
 
-export default class TopBar extends React.Component {
+class TopBar extends React.Component {
+    handleTeamClick = (teamName) => {
+        const { setSelectedTeam } = this.props
+
+        setSelectedTeam(teamName)
+    }
+
     render() {
-        const { isActive, bonusPoints, score, teamName, handleTeamClick } = this.props;
+        const { isActive, bonus, score, name } = this.props;
 
         return (
-            <TouchableOpacity onPress={() => handleTeamClick(teamName)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
+            <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.leftColumn}>
                     <Text style={styles.text}>
-                        {teamName}
+                        {name}
                     </Text>
                     <Text style={styles.text}>
-                        {bonusPoints || '0'}
+                        {bonus || '0'}
                     </Text>
                 </View>
                 <View style={styles.scoreContainer}>
@@ -64,3 +74,18 @@ const styles = StyleSheet.create({
         textAlign: "right"
     }
 })
+
+const mapStateToProps = ({ state }) => {
+    return {
+        miScore: state.miScore,
+        viScore: state.viScore
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ setSelectedTeam }, dispatch)
+}
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+)(TopBar)
