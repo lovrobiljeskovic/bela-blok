@@ -13,16 +13,12 @@ export default class BottomBar extends React.Component {
 
         return (
             <View style={styles.root}>
-                <View style={styles.goBackButtonContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('SecondScreen')} style={styles.goBackButton}>
-                        <FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.confirmationButtonContainer}>
-                    <TouchableOpacity style={styles.confirmationButton}>
-                        <Text style={styles.title}>Potvrdi</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('SecondScreen')} style={styles.goBackButton}>
+                    <FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.confirmationButton}>
+                    <Text style={styles.title}>Potvrdi</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -36,19 +32,11 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
         flexDirection: "row",
     },
-    goBackButtonContainer: {
-        flex: 2,
-    },
     goBackButton: {
-        flexGrow: 1,
+        flex: 1,
         backgroundColor: 'rgba(207, 0, 15, 1)',
-    },
-    confirmationButtonContainer: {
-        flex: 4
     },
     confirmationButton: {
         flex: 1,

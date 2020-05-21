@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: "row",
-        justifyContent: "center"
     },
     dividerContainer: {
         flex: 1
