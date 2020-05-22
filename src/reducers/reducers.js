@@ -1,8 +1,6 @@
-import { setSelectedTeam } from "../actions/actions"
-
 let INITIAL_STATE = {
     selectedTeam: "Mi",
-    selectedPoints: "Igra",
+    selectedPoints: "igra",
     teams: {
         "Mi": {
             score: "",
@@ -22,7 +20,7 @@ const reducers = (state = INITIAL_STATE, action) => {
         case "SET_SELECTED_TEAM":
             return {
                 ...state,
-                selectedTeam: `${action.payload}`
+                selectedTeam: action.payload
             }
         case "SET_SELECTED_POINTS":
             return {

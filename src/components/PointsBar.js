@@ -15,7 +15,7 @@ class PointsBar extends React.Component {
     }
 
     render() {
-        const { isActive, title, handlePointsClick } = this.props
+        const { isActive, title } = this.props
 
         return (
             <TouchableOpacity onPress={() => this.handlePointsClick(title)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
@@ -45,14 +45,17 @@ const styles = StyleSheet.create({
         marginTop: scale(1),
         marginRight: scale(2),
         marginBottom: scale(2),
-        marginLeft: scale(2)
+        marginLeft: scale(2),
+        borderRadius: scale(2)
     },
     selectedRoot: {
-        backgroundColor: 'rgba(63, 195, 128, 1)'
+        backgroundColor: 'rgb(48, 209, 88)'
     },
     title: {
         fontSize: moderateScale(32, 0.25),
-        color: 'black'
+        color: 'rgb(58, 58, 60)',
+        fontWeight: "900",
+        fontVariant: ["small-caps"]
     },
 })
 

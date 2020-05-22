@@ -1,6 +1,6 @@
-export const setSelectedTeam = (team) => ({
+export const setSelectedTeam = (teamName) => ({
     type: "SET_SELECTED_TEAM",
-    payload: team
+    payload: teamName
 })
 
 export const setSelectedPoints = (pointsType) => ({

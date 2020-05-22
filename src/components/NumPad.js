@@ -17,7 +17,7 @@ class NumPad extends React.Component {
     handleDeleteLastInput = () => {
         const { updateTeam, selectedPoints, selectedTeam, teams } = this.props
 
-        const scoreToUpdate = selectedPoints === "Igra" ? 'score' : 'bonus'
+        const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
 
         updateTeam(selectedTeam, {...teams[selectedTeam], [scoreToUpdate]: teams[selectedTeam][scoreToUpdate].slice(0, -1) })
     }
@@ -25,7 +25,7 @@ class NumPad extends React.Component {
     handleNumPadClick = (number) => {
         const { updateTeam, selectedPoints, selectedTeam, teams } = this.props
 
-        const scoreToUpdate = selectedPoints === "Igra" ? 'score' : 'bonus'
+        const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
 
         updateTeam(selectedTeam, {...teams[selectedTeam], [scoreToUpdate]: teams[selectedTeam][scoreToUpdate] + number })
     }
@@ -87,7 +87,7 @@ class NumPad extends React.Component {
                 <View style={styles.container}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleDeleteAll()} style={styles.numPadButton}>
-                            <Text style={styles.numpadText}>Izbriši sve</Text>
+                            <Text style={styles.numpadText}>izbriši sve</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
@@ -97,7 +97,7 @@ class NumPad extends React.Component {
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleDeleteLastInput()} style={styles.numPadButton}>
-                            <Text style={styles.numpadTextDel}>Izbriši zadnji unos</Text>
+                            <Text style={styles.numpadTextDel}>izbriši zadnji unos</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -115,19 +115,18 @@ NumPad.propTypes = {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "column",
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderBottomColor: "black",
-        borderTopColor: "black"
+        paddingTop: scale(8),
+        paddingRight: scale(16),
+        paddingBottom: scale(8),
+        paddingLeft: scale(16)
     },
     container: {
         flex: 1,
         width: "100%",
-        backgroundColor: '#fff',
+        backgroundColor: "rgb(242, 242, 247)",
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
@@ -141,24 +140,28 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: 'white',
-        margin: scale(4)
+        margin: scale(4),
+        backgroundColor: "rgb(242, 242, 247)",
     },
     numpadNumber: {
         fontSize: moderateScale(60, 0.1),
-        color: 'black',
+        color: 'rgb(58, 58, 60)',
         textAlign: "center",
-        fontWeight: "600"
+        fontWeight: "700",
     },
     numpadTextDel: {
         fontSize: moderateScale(20, 0.25),
-        color: 'black',
-        textAlign: "center"
+        color: 'rgb(58, 58, 60)',
+        textAlign: "center",
+        fontWeight: "600",
+        fontVariant: ["small-caps"]
     },
     numpadText: {
         fontSize: moderateScale(30, 0.25),
-        color: 'black',
+        color: 'rgb(58, 58, 60)',
         textAlign: "center",
+        fontWeight: "600",
+        fontVariant: ["small-caps"]
     }
 })
 

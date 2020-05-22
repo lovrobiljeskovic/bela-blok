@@ -9,29 +9,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator()
 
 export default class App extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            miScore: '',
-            viScore: '',
-            selectedTeam: 'Mi',
-            selectedPoints: 'Igra',
-            miBonusScore: '',
-            viBonusScore: ''
-        }
-    }
-
-
     render() {
-        const { miScore, viScore, selectedTeam, selectedPoints, miBonusScore, viBonusScore } = this.state
-
         return (
             <Provider store={store}>
                 <NavigationContainer>
                     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="FirstScreen">
                         <Stack.Screen name="FirstScreen">
-                            {(props) => <FirstScreen {...props} handleDeleteLastInput={this.handleDeleteLastInput} handleDeleteAll={this.handleDeleteAll} handlePointsClick={this.handlePointsClick} handleTeamClick={this.handleTeamClick} handleNumPadClick={this.handleNumPadClick} miScore={miScore} viScore={viScore} selectedPoints={selectedPoints} miBonusScore={miBonusScore} viBonusScore={viBonusScore} />}
+                            {(props) => <FirstScreen {...props} />}
                         </Stack.Screen>
                         <Stack.Screen name="SecondScreen">
                             {(props) => <SecondScreen {...props} />}

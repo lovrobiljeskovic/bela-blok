@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
     },
     title: {
-        fontSize: 36
+        fontSize: moderateScale(36, 0.25),
+        color: 'rgb(58, 58, 60)',
     }
 })

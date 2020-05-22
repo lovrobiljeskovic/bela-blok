@@ -10,7 +10,6 @@ import NumPad from '../components/NumPad';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
 
-
 class FirstScreen extends React.Component {
     render() {
         const { navigation, teams, selectedPoints, selectedTeam } = this.props;
@@ -24,8 +23,8 @@ class FirstScreen extends React.Component {
                         })}
                     </View>
                     <View style={[styles.row, { flex: 20 }]}>
-                        <PointsBar title={"Igra"} isActive={selectedPoints === 'Igra'} />
-                        <PointsBar title={"Zvanje"} isActive={selectedPoints === 'Zvanje'} />
+                        <PointsBar title={"igra"} isActive={selectedPoints === 'igra'} />
+                        <PointsBar title={"zvanje"} isActive={selectedPoints === 'zvanje'} />
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
@@ -47,6 +46,7 @@ FirstScreen.propTypes = {
     miScore: PropTypes.string,
     viScore: PropTypes.string,
     selectedPoints: PropTypes.string,
+    selectedTeam: PropTypes.string,
     miBonusScore: PropTypes.string,
     viBonusScore: PropTypes.string,
     handlePointsClick: PropTypes.func,
@@ -59,6 +59,7 @@ FirstScreen.propTypes = {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
+        backgroundColor: "rgb(242, 242, 247)",
     },
     scoreTrackerContainer: {
         flex: 30,
