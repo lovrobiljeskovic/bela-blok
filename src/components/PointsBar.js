@@ -41,17 +41,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        
-        elevation: 5,
-        borderColor: 'black',
-        padding: scale(8)
+        padding: scale(8),
+        marginTop: scale(1),
+        marginRight: scale(2),
+        marginBottom: scale(2),
+        marginLeft: scale(2)
     },
     selectedRoot: {
         backgroundColor: 'rgba(63, 195, 128, 1)'

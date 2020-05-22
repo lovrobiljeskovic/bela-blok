@@ -23,21 +23,18 @@ class FirstScreen extends React.Component {
                             return <TopBar isActive={selectedTeam === team.name} {...team} key={idx} />
                         })}
                     </View>
-                    <View style={styles.dividerContainer}>
-                        <Divider />
-                    </View>
                     <View style={[styles.row, { flex: 20 }]}>
                         <PointsBar title={"Igra"} isActive={selectedPoints === 'Igra'} />
                         <PointsBar title={"Zvanje"} isActive={selectedPoints === 'Zvanje'} />
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
-                    <View style={[styles.row, { flex: 1 }]}>
+                    <View style={{ flex: 1 }}>
                         <NumPad />
                     </View>
                 </View>
                 <View style={styles.bottomBarContainer}>
-                    <View style={[styles.row, { flex: 1 }]}>
+                    <View style={{ flex: 1 }}>
                         <BottomBar navigation={navigation} />
                     </View>
                 </View>
@@ -65,7 +62,6 @@ const styles = StyleSheet.create({
     },
     scoreTrackerContainer: {
         flex: 30,
-        flexDirection: "column"
     },
     row: {
         flexDirection: "row",
@@ -78,7 +74,6 @@ const styles = StyleSheet.create({
     },
     bottomBarContainer: {
         flex: 20,
-        flexDirection: "row"
     },
 })
 

@@ -36,68 +36,68 @@ class NumPad extends React.Component {
                 <View style={styles.container}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("1")} style={styles.numPadButton}>
-                            <Text style={styles.title}>1</Text>
+                            <Text style={styles.numpadNumber}>1</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("2")} style={styles.numPadButton}>
-                            <Text style={styles.title}>2</Text>
+                            <Text style={styles.numpadNumber}>2</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("3")} style={styles.numPadButton}>
-                            <Text style={styles.title}>3</Text>
+                            <Text style={styles.numpadNumber}>3</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("4")} style={styles.numPadButton}>
-                            <Text style={styles.title}>4</Text>
+                            <Text style={styles.numpadNumber}>4</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("5")} style={styles.numPadButton}>
-                            <Text style={styles.title}>5</Text>
+                            <Text style={styles.numpadNumber}>5</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("6")} style={styles.numPadButton}>
-                            <Text style={styles.title}>6</Text>
+                            <Text style={styles.numpadNumber}>6</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("7")} style={styles.numPadButton}>
-                            <Text style={styles.title}>7</Text>
+                            <Text style={styles.numpadNumber}>7</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("8")} style={styles.numPadButton}>
-                            <Text style={styles.title}>8</Text>
+                            <Text style={styles.numpadNumber}>8</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("9")} style={styles.numPadButton}>
-                            <Text style={styles.title}>9</Text>
+                            <Text style={styles.numpadNumber}>9</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleDeleteAll()} style={styles.numPadButton}>
-                            <Text style={styles.title}>Izbriši sve</Text>
+                            <Text style={styles.numpadText}>Izbriši sve</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleNumPadClick("0")} style={styles.numPadButton}>
-                            <Text style={styles.title}>0</Text>
+                            <Text style={styles.numpadNumber}>0</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => this.handleDeleteLastInput()} style={styles.numPadButton}>
-                            <Text style={styles.delTitle}>Izbriši zadnji unos</Text>
+                            <Text style={styles.numpadTextDel}>Izbriši zadnji unos</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -142,26 +142,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: 'white',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 2,
-        elevation: 5,
-        borderColor: 'black',
         margin: scale(4)
     },
-    title: {
-        fontSize: moderateScale(30, 0.25),
+    numpadNumber: {
+        fontSize: moderateScale(60, 0.1),
         color: 'black',
-        textAlign: "center"
+        textAlign: "center",
+        fontWeight: "600"
     },
-    delTitle: {
+    numpadTextDel: {
         fontSize: moderateScale(20, 0.25),
         color: 'black',
         textAlign: "center"
+    },
+    numpadText: {
+        fontSize: moderateScale(30, 0.25),
+        color: 'black',
+        textAlign: "center",
     }
 })
 

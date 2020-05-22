@@ -14,13 +14,17 @@ class TopBar extends React.Component {
         setSelectedTeam(teamName)
     }
 
+    ensureTextIntegrity = (event) => {
+        console.log(event)
+    }
+
     render() {
         const { isActive, bonus, score, name } = this.props;
 
         return (
             <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
-                <View style={styles.leftColumn}>
-                    <Text style={styles.text}>
+                <View style={styles.bonusContainer}>
+                    <Text style={styles.text} onTextLayout={this.ensureTextIntegrity}>
                         {name}
                     </Text>
                     <Text style={styles.text}>
@@ -54,22 +58,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: scale(8)
+        padding: scale(8),
+        marginTop: scale(2),
+        marginRight: scale(2),
+        marginBottom: scale(1),
+        marginLeft: scale(2)
     },
     selectedRoot: {
         backgroundColor: 'rgba(63, 195, 128, 1)'
     },
-    leftColumn: {
+    bonusContainer: {
         flex: 1
     },
     scoreContainer: {
-        flex: 3
+        flex: 2
     },
     text: {
-        fontSize: moderateScale(16, 0.25),
+        fontSize: moderateScale(16, 0.1),
     },
     title: {
-        fontSize: moderateScale(32, 0.25),
+        fontSize: moderateScale(32, 0.1),
         color: 'black',
         textAlign: "right"
     }

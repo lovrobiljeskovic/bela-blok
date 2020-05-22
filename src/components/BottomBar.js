@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { scale, moderateScale } from "../utils/scalingUtils"
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {  } from 'react-native-gesture-handler';
 
 export default class BottomBar extends React.Component {
     render() {
@@ -31,15 +31,18 @@ BottomBar.propTypes = {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#fff',
-        flexDirection: "row",
+        flexDirection: "row"
     },
     goBackButton: {
         flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: 'rgba(207, 0, 15, 1)',
     },
     confirmationButton: {
-        flex: 1,
+        flex: 3,
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: 'green',
     },
     title: {
