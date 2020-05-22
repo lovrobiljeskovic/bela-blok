@@ -62,20 +62,19 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
         flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: scale(1),
         paddingRight: scale(8),
-        paddingBottom: scale(2),
+        paddingBottom: scale(1),
         paddingLeft: scale(8),
-        marginTop: scale(2),
-        marginRight: scale(2),
-        marginBottom: scale(1),
-        marginLeft: scale(2),
-        borderRadius: scale(2)
+        borderRadius: scale(4),
+        borderWidth: 1,
+        borderColor: "rgb(228, 228, 228)"
     },
     selectedRoot: {
-        backgroundColor: 'rgb(48, 209, 88)'
+        backgroundColor: 'rgb(46, 204, 113)'
     },
     bonusContainer: {
         flex: 1,

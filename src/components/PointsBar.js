@@ -41,15 +41,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
-        padding: scale(8),
-        marginTop: scale(1),
-        marginRight: scale(2),
-        marginBottom: scale(2),
-        marginLeft: scale(2),
-        borderRadius: scale(2)
+        borderRadius: scale(4),
+        borderWidth: 1,
+        borderColor: "rgb(228, 228, 228)",
+        paddingBottom: scale(3),
     },
     selectedRoot: {
-        backgroundColor: 'rgb(48, 209, 88)'
+        backgroundColor: 'rgb(46, 204, 113)'
     },
     title: {
         fontSize: moderateScale(32, 0.25),

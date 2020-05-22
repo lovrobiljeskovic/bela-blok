@@ -9,22 +9,31 @@ import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
+import { scale } from '../utils/scalingUtils';
 
 class FirstScreen extends React.Component {
     render() {
         const { navigation, teams, selectedPoints, selectedTeam } = this.props;
-        
+
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={[styles.row, { flex: 20 }]}>
                         {Object.values(teams).map((team, idx) => {
-                            return <TopBar isActive={selectedTeam === team.name} {...team} key={idx} />
+                            return (
+                                <View style={[styles.container, { paddingLeft: idx === 0 ? scale(4) : scale(2), paddingRight: idx === 1 ? scale(4) : scale(2), paddingBottom: scale(1), paddingTop: scale(4) }]} key={idx}>
+                                    <TopBar isActive={selectedTeam === team.name} {...team} />
+                                </View>
+                            )
                         })}
                     </View>
                     <View style={[styles.row, { flex: 20 }]}>
-                        <PointsBar title={"igra"} isActive={selectedPoints === 'igra'} />
-                        <PointsBar title={"zvanje"} isActive={selectedPoints === 'zvanje'} />
+                        <View style={[styles.container, { paddingLeft: scale(4), paddingRight: scale(2), paddingTop: scale(1), paddingBottom: scale(4) }]}>
+                            <PointsBar title={"igra"} isActive={selectedPoints === 'igra'} />
+                        </View>
+                        <View style={[styles.container, { paddingLeft: scale(2), paddingRight: scale(4), paddingTop: scale(1), paddingBottom: scale(4) }]}>
+                            <PointsBar title={"zvanje"} isActive={selectedPoints === 'zvanje'} />
+                        </View>
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
@@ -67,8 +76,9 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
     },
-    dividerContainer: {
-        flex: 1
+    container: {
+        flex: 1,
+        flexDirection: "row"
     },
     numPadContainer: {
         flex: 100,
