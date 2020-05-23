@@ -1,15 +1,15 @@
 let INITIAL_STATE = {
-    selectedTeam: "Mi",
+    selectedTeamName: "Mi",
     selectedPoints: "igra",
     teams: {
         "Mi": {
-            score: "",
-            bonus: "",
+            score: { number: "", charsDidExceedContainer: false },
+            bonus: { number: "", charsDidExceedContainer: false },
             name: "Mi"
         },
         "Vi": {
-            score: "",
-            bonus: "",
+            score: { number: "", charsDidExceedContainer: false },
+            bonus: { number: "", charsDidExceedContainer: false },
             name: "Vi"
         }
     }
@@ -20,7 +20,7 @@ const reducers = (state = INITIAL_STATE, action) => {
         case "SET_SELECTED_TEAM":
             return {
                 ...state,
-                selectedTeam: action.payload
+                selectedTeamName: action.payload
             }
         case "SET_SELECTED_POINTS":
             return {

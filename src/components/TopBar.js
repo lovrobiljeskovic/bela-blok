@@ -9,6 +9,16 @@ import { setSelectedTeam } from "../actions/actions"
 import { updateTeam } from "../actions/actions"
 
 class TopBar extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            bonusCharWidth: null,
+            scoreCharWidth: null,
+            bonusContainerWidth: null,
+            scoreContainerWidth: null
+        }
+    }
     handleTeamClick = (teamName) => {
         const { setSelectedTeam } = this.props
 
@@ -16,14 +26,34 @@ class TopBar extends React.Component {
     }
 
     // ensureTextIntegrity = ({ nativeEvent: { lines }}) => {
-    //     const { selectedTeam, selectedPoints, teams, updateTeam } = this.props
+    //     const { selectedTeamName, selectedPoints, teams, updateTeam } = this.props
 
     //     const scoreToUpdate = selectedPoints === "Igra" ? 'score' : 'bonus'
 
     //     if (lines.length > 1) {
-    //         updateTeam(selectedTeam, {...teams[selectedTeam], [scoreToUpdate]: teams[selectedTeam][scoreToUpdate].slice(0, -1) })
+    //         updateTeam(selectedTeamName, {...teams[selectedTeamName], [scoreToUpdate]: teams[selectedTeamName][scoreToUpdate].slice(0, -1) })
     //     }
     // }
+
+    onLayout = ({ nativeEvent: { layout }}, scoreType) => {
+        this.setState({ [scoreType === "bonus" ? "bonusContainerWidth" : "scoreContainerWidth"]: layout.width })
+    }
+    
+    onTextLayout = ({ nativeEvent: { lines }}, scoreType) => {
+        const { name, updateTeam, teams} = this.props
+
+        const widthKey = scoreType === "bonus" ? "bonusCharWidth" : "scoreCharWidth"
+        const containerKey = scoreType === "bonus" ? "bonusContainerWidth" : "scoreContainerWidth"
+        const scoreToUpdate = scoreType === "bonus" ? 'bonus' : 'score'
+        
+        if (lines[0].text.length === 1) {
+            this.setState({ [widthKey]: lines[0].width })
+        }
+        console.log(lines[0].width + this.state[widthKey], this.state[containerKey])
+        if (this.state[containerKey] !== null && this.state[widthKey] !== null && lines[0].width + this.state[widthKey] >= this.state[containerKey]) {
+            updateTeam(name, {...teams[name], [scoreToUpdate]: {...teams[name][scoreToUpdate], charsDidExceedContainer: true }})
+        }
+    }
 
     render() {
         const { isActive, bonus, score, name } = this.props;
@@ -34,13 +64,13 @@ class TopBar extends React.Component {
                     <Text style={styles.teamNameText}>
                         {name}
                     </Text>
-                    <Text style={styles.bonus} numberOfLines={1} ellipsizeMode={"clip"}>
-                        {bonus || "0"}
+                    <Text style={styles.bonus} numberOfLines={1} onLayout={(e) => this.onLayout(e, "bonus")} onTextLayout={(e) => this.onTextLayout(e, "bonus")}>
+                        {bonus.number || "0"}
                     </Text>
                 </View>
                 <View style={styles.scoreContainer}>
-                    <Text style={styles.score} numberOfLines={1} ellipsizeMode={"clip"}>
-                        {score || "0"}
+                    <Text style={styles.score} numberOfLines={1} onLayout={(e) => this.onLayout(e, "score")} onTextLayout={(e) => this.onTextLayout(e, "score")}>
+                        {score.number || "0"}
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -50,11 +80,11 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
     teamName: PropTypes.string,
-    score: PropTypes.string,
-    selectedTeam: PropTypes.string,
+    score: PropTypes.object,
+    selectedTeamName: PropTypes.string,
     handleTeamClick: PropTypes.func,
     selectedPoints: PropTypes.string,
-    bonusPoints: PropTypes.string,
+    bonusPoints: PropTypes.object,
     isActive: PropTypes.bool
 }
 
@@ -94,21 +124,20 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(16, 0.1),
         fontWeight: "600",
         color: 'rgb(58, 58, 60)',
-        fontVariant: ["small-caps"],
+        fontVariant: ["tabular-nums"],
     },
     score: {
         fontSize: moderateScale(32, 0.1),
         color: 'rgb(58, 58, 60)',
         textAlign: "right",
+        fontVariant: ["tabular-nums"]
     }
 })
 
 const mapStateToProps = ({ state }) => {
     return {
-        miScore: state.miScore,
-        viScore: state.viScore,
         teams: state.teams,
-        selectedTeam: state.selectedTeam,
+        selectedTeamName: state.selectedTeamName,
         selectedPoints: state.selectedPoints
     }
 }

@@ -13,16 +13,17 @@ import { scale } from '../utils/scalingUtils';
 
 class FirstScreen extends React.Component {
     render() {
-        const { navigation, teams, selectedPoints, selectedTeam } = this.props;
+        const { navigation, teams, selectedPoints, selectedTeamName } = this.props;
 
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={[styles.row, { flex: 20 }]}>
                         {Object.values(teams).map((team, idx) => {
+                            console.log(team)
                             return (
                                 <View style={[styles.container, { paddingLeft: idx === 0 ? scale(4) : scale(2), paddingRight: idx === 1 ? scale(4) : scale(2), paddingBottom: scale(1), paddingTop: scale(4) }]} key={idx}>
-                                    <TopBar isActive={selectedTeam === team.name} {...team} />
+                                    <TopBar isActive={selectedTeamName === team.name} {...team} />
                                 </View>
                             )
                         })}
@@ -52,17 +53,8 @@ class FirstScreen extends React.Component {
 }
 
 FirstScreen.propTypes = {
-    miScore: PropTypes.string,
-    viScore: PropTypes.string,
     selectedPoints: PropTypes.string,
-    selectedTeam: PropTypes.string,
-    miBonusScore: PropTypes.string,
-    viBonusScore: PropTypes.string,
-    handlePointsClick: PropTypes.func,
-    handleTeamClick: PropTypes.func,
-    handleDeleteAll: PropTypes.func,
-    handleDeleteLastInput: PropTypes.func,
-    handleNumPadClick: PropTypes.func,
+    selectedTeamName: PropTypes.string,
 }
 
 const styles = StyleSheet.create({
@@ -90,7 +82,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = ({ state }) => {
     return {
-        selectedTeam: state.selectedTeam,
+        selectedTeamName: state.selectedTeamName,
         selectedPoints: state.selectedPoints,
         teams: state.teams
     }

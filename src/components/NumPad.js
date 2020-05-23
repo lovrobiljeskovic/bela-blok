@@ -8,26 +8,44 @@ import PropTypes from 'prop-types'
 import { updateTeam } from "../actions/actions"
 
 class NumPad extends React.Component {
-    handleDeleteAll = () => {
-        const { updateTeam, selectedTeam, teams } = this.props
+    constructor(props) {
+        super(props)
 
-        updateTeam(selectedTeam, {...teams[selectedTeam], bonus: "", score: "" })
+        this.areButtonsEnabled = true
+    }
+
+    handleDeleteAll = () => {
+        const { updateTeam, selectedTeamName, teams } = this.props
+
+        updateTeam(selectedTeamName, { ...teams[selectedTeamName], bonus: { number: "", charsDidExceedContainer: false }, score: { number: "", charsDidExceedContainer: false } })
+        this.areButtonsEnabled = true
     }
 
     handleDeleteLastInput = () => {
-        const { updateTeam, selectedPoints, selectedTeam, teams } = this.props
+        const { updateTeam, selectedPoints, selectedTeamName, teams } = this.props
 
         const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
+        const selectedTeam = teams[selectedTeamName]
 
-        updateTeam(selectedTeam, {...teams[selectedTeam], [scoreToUpdate]: teams[selectedTeam][scoreToUpdate].slice(0, -1) })
+        updateTeam(selectedTeamName, { ...selectedTeam, [scoreToUpdate]: { ...selectedTeam[scoreToUpdate], number: selectedTeam[scoreToUpdate].number.slice(0, -1), charsDidExceedContainer: false } })
+        this.areButtonsEnabled = true
     }
 
     handleNumPadClick = (number) => {
-        const { updateTeam, selectedPoints, selectedTeam, teams } = this.props
+        const { updateTeam, selectedPoints, selectedTeamName, teams } = this.props
 
-        const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
+        if (this.areButtonsEnabled) {
+            this.areButtonsEnabled = false
 
-        updateTeam(selectedTeam, {...teams[selectedTeam], [scoreToUpdate]: teams[selectedTeam][scoreToUpdate] + number })
+            const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
+            const selectedTeam = teams[selectedTeamName]
+
+            if (!selectedTeam[scoreToUpdate].charsDidExceedContainer) {
+                updateTeam(selectedTeamName, { ...selectedTeam, [scoreToUpdate]: { ...selectedTeam[scoreToUpdate], number: selectedTeam[scoreToUpdate].number + number } })
+            }
+
+            setTimeout(() => this.areButtonsEnabled = true, 200) 
+        }
     }
 
     render() {
@@ -168,7 +186,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ state }) => {
     return {
         selectedPoints: state.selectedPoints,
-        selectedTeam: state.selectedTeam,
+        selectedTeamName: state.selectedTeamName,
         teams: state.teams
     }
 }
