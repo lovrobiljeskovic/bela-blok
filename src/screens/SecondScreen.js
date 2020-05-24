@@ -1,44 +1,153 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { Button } from "react-native-elements";
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import React from "react"
+import PropTypes from "prop-types"
+import compose from "recompose/compose"
+import { connect } from "react-redux"
+import TopBar from '../components/TopBar'
+import { bindActionCreators } from "redux"
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity } from "react-native";
+import { scale, moderateScale } from '../utils/scalingUtils';
 
-export default class SecondScreen extends React.Component {
+class SecondScreen extends React.Component {
     render() {
         const { navigation } = this.props;
+
+        const testData = [
+            [
+                {
+                    score: "234",
+                    bonus: "120"
+                },
+                {
+                    score: "512",
+                    bonus: "254"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ],
+            [
+                {
+
+                    score: "543",
+                    bonus: "349"
+                },
+                {
+                    score: "632",
+                    bonus: "231"
+                }
+            ]
+        ]
+
         return (
-            <View style={styles.root}>
-                <View style={styles.scrollableContainer}>
-                    <View style={styles.column}>
-                        <Text style={styles.title}>0</Text>
-                    </View>
-                    <View style={styles.column}>
-                        <Text style={styles.title}>0</Text>
-                    </View>
-                </View>
-                <View style={styles.overallScoreContainer}>
-                    <View style={styles.column}>
-                        <Text style={styles.title}>0</Text>
-                    </View>
-                    <View style={styles.column}>
-                        <Text style={styles.title}>0</Text>
-                    </View>
-                </View>
-                <View style={styles.row}>
-                    <Button
-                        onPress={() => navigation.navigate("FirstScreen")}
-                        buttonStyle={styles.confirmationButton}
-                        title="Nova"
-                        titleStyle={styles.title}
+            <SafeAreaView style={styles.root}>
+                <View style={styles.roundPointsContainer}>
+                    <FlatList
+                        data={testData}
+                        keyExtractor={(item, index) => `${index}`}
+                        renderItem={({ item }) => <RoundPointsRow item={item} />}
                     />
                 </View>
-            </View>
+                <View style={styles.overallScoresContainer}>
+
+                </View>
+                <View style={styles.novaButtonContainer}>
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("FirstScreen")}
+                            style={styles.confirmationButton}
+                        >
+                            <Text style={styles.buttonText}>nova</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </SafeAreaView>
         );
     }
+}
+
+const RoundPointsRow = (props) => {
+    const { item } = props
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>{item[0].score}</Text>
+            <Text style={styles.title}>{item[1].score}</Text>
+        </View>
+    )
 }
 
 SecondScreen.propTypes = {
@@ -47,42 +156,66 @@ SecondScreen.propTypes = {
 
 const styles = StyleSheet.create({
     root: {
-        height: hp("100%"),
+        flex: 1,
+        backgroundColor: "rgb(242, 242, 247)",
+        margin: scale(2)
     },
-    confirmationButton: {
-        backgroundColor: "green",
-        width: wp("100%"),
-        height: hp("15%"),
+    roundPointsContainer: {
+        flex: 100
+    },
+    overallScoresContainer: {
+        flex: 50,
+        padding: scale(2)
+    },
+    novaButtonContainer: {
+        flex: 20,
+        flexDirection: "row",
+        padding: scale(2)
+    },
+    container: {
+        height: scale(80),
+        paddingTop: scale(6),
+        paddingRight: scale(12),
+        paddingBottom: scale(6),
+        paddingLeft: scale(12),
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center"
     },
     title: {
-        fontSize: 35,
+        fontSize: moderateScale(36),
+        fontVariant: ["tabular-nums"],
+        color: 'rgb(58, 58, 60)',
+        fontWeight: "900"
     },
-    overallScoreContainer: {
-        height: hp("15%"),
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: 'center'
+    buttonText: {
+        color: 'rgb(58, 58, 60)',
+        fontVariant: ["small-caps"],
+        fontWeight: "900",
+        fontSize: moderateScale(36, 0.25)
     },
-    column: {
-        width: wp("50%"),
-        display: "flex",
-        flexDirection: "column",
+    confirmationButton: {
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        paddingBottom: scale(3),
+        backgroundColor: 'rgb(46, 204, 113)',
+        borderRadius: scale(4),
+        borderWidth: 1,
+        borderColor: "rgb(228, 228, 228)",
+
     },
-    row: {
-        height: hp("15%"),
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: 'center'
-    },
-    scrollableContainer: {
-        height: hp('70%'),
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: 'flex-start'
-    }
 });
+
+const mapStateToProps = ({ state }) => {
+    return {
+        selectedTeamName: state.selectedTeamName,
+        selectedPoints: state.selectedPoints,
+        teams: state.teams
+    }
+}
+
+export default compose(
+    connect(mapStateToProps, null),
+)(SecondScreen)

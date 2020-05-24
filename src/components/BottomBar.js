@@ -66,5 +66,6 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(36, 0.25),
         color: 'rgb(58, 58, 60)',
         fontVariant: ["small-caps"],
+        fontWeight: "900",
     }
 })

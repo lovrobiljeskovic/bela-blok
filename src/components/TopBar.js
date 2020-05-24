@@ -49,7 +49,7 @@ class TopBar extends React.Component {
         if (lines[0].text.length === 1) {
             this.setState({ [widthKey]: lines[0].width })
         }
-        console.log(lines[0].width + this.state[widthKey], this.state[containerKey])
+
         if (this.state[containerKey] !== null && this.state[widthKey] !== null && lines[0].width + this.state[widthKey] >= this.state[containerKey]) {
             updateTeam(name, {...teams[name], [scoreToUpdate]: {...teams[name][scoreToUpdate], charsDidExceedContainer: true }})
         }

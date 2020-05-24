@@ -20,7 +20,6 @@ class FirstScreen extends React.Component {
                 <View style={styles.scoreTrackerContainer}>
                     <View style={[styles.row, { flex: 20 }]}>
                         {Object.values(teams).map((team, idx) => {
-                            console.log(team)
                             return (
                                 <View style={[styles.container, { paddingLeft: idx === 0 ? scale(4) : scale(2), paddingRight: idx === 1 ? scale(4) : scale(2), paddingBottom: scale(1), paddingTop: scale(4) }]} key={idx}>
                                     <TopBar isActive={selectedTeamName === team.name} {...team} />
