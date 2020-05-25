@@ -1,6 +1,7 @@
 let INITIAL_STATE = {
     selectedTeamName: "Mi",
     selectedPoints: "igra",
+    overallPoints: [],
     teams: {
         "Mi": {
             score: { number: "", charsDidExceedContainer: false },
@@ -35,6 +36,17 @@ const reducers = (state = INITIAL_STATE, action) => {
                     [action.payload.team]: action.payload.newState
                 }
             }
+        case "SAVE_ROUND_POINTS":
+            return {
+                ...state,
+                overallPoints: [...state.overallPoints, action.payload]
+            }
+        case "RESET_POINTS":
+            return {
+                ...state,
+                teams: INITIAL_STATE.teams
+            }
+
         default:
             return state
     }

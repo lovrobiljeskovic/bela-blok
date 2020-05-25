@@ -9,114 +9,12 @@ import { scale, moderateScale } from '../utils/scalingUtils';
 
 class SecondScreen extends React.Component {
     render() {
-        const { navigation } = this.props;
-
-        const testData = [
-            [
-                {
-                    score: "234",
-                    bonus: "120"
-                },
-                {
-                    score: "512",
-                    bonus: "254"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ],
-            [
-                {
-
-                    score: "543",
-                    bonus: "349"
-                },
-                {
-                    score: "632",
-                    bonus: "231"
-                }
-            ]
-        ]
-
+        const { navigation, overallPoints } = this.props;
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.roundPointsContainer}>
                     <FlatList
-                        data={testData}
+                        data={overallPoints}
                         keyExtractor={(item, index) => `${index}`}
                         renderItem={({ item }) => <RoundPointsRow item={item} />}
                     />
@@ -144,8 +42,8 @@ const RoundPointsRow = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{item[0].score}</Text>
-            <Text style={styles.title}>{item[1].score}</Text>
+            <Text style={styles.title}>{item[0].combinedPoints}</Text>
+            <Text style={styles.title}>{item[1].combinedPoints}</Text>
         </View>
     )
 }
@@ -211,8 +109,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ state }) => {
     return {
         selectedTeamName: state.selectedTeamName,
-        selectedPoints: state.selectedPoints,
-        teams: state.teams
+        teams: state.teams,
+        overallPoints: state.overallPoints
     }
 }
 

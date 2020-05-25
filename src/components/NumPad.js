@@ -42,9 +42,15 @@ class NumPad extends React.Component {
 
             if (!selectedTeam[scoreToUpdate].charsDidExceedContainer) {
                 updateTeam(selectedTeamName, { ...selectedTeam, [scoreToUpdate]: { ...selectedTeam[scoreToUpdate], number: selectedTeam[scoreToUpdate].number + number } })
+                if (scoreToUpdate === 'score') {
+                    const baseScore = 162
+                    const otherTeam = teams[selectedTeamName === 'Mi' ? 'Vi' : 'Mi']
+                    const otherTeamPoints = Math.max(baseScore - (selectedTeam[scoreToUpdate].number + number), 0) === 0 ? '' : baseScore - (selectedTeam[scoreToUpdate].number + number)
+                    updateTeam(otherTeam.name, { ...otherTeam, [scoreToUpdate]: { ...otherTeam[scoreToUpdate], number: otherTeamPoints } })
+                }
             }
 
-            setTimeout(() => this.areButtonsEnabled = true, 200) 
+            setTimeout(() => this.areButtonsEnabled = true, 200)
         }
     }
 

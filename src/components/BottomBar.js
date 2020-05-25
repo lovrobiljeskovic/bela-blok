@@ -1,13 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { scale, moderateScale } from "../utils/scalingUtils"
-import { } from 'react-native-gesture-handler';
+import { saveRoundPoints, resetPoints } from "../actions/actions"
+import compose from "recompose/compose"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 
-export default class BottomBar extends React.Component {
+
+class BottomBar extends React.Component {
+
+    handleSaveRoundPoints = () => {
+        const { teams, saveRoundPoints, navigation, resetPoints } = this.props;
+        const miOverallScore = teams['Mi'].score.number + teams['Mi'].bonus.number
+        const viOverallScore = teams['Vi'].score.number + teams['Vi'].bonus.number
+        const roundPoints = [
+            {
+                score: teams['Mi'].score.number,
+                bonus: teams['Mi'].bonus.number,
+                combinedPoints: miOverallScore
+            },
+            {
+                score: teams['Vi'].score.number,
+                bonus: teams['Vi'].bonus.number,
+                combinedPoints: viOverallScore
+            }
+        ]
+        saveRoundPoints(roundPoints)
+        navigation.navigate('SecondScreen')
+        resetPoints()
+    }
+
     render() {
         const { navigation } = this.props
 
@@ -19,7 +44,7 @@ export default class BottomBar extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.container, { paddingLeft: scale(1), paddingRight: scale(2) }]}>
-                    <TouchableOpacity style={styles.confirmationButton}>
+                    <TouchableOpacity onPress={this.handleSaveRoundPoints} style={styles.confirmationButton}>
                         <Text style={styles.title}>potvrdi</Text>
                     </TouchableOpacity>
                 </View>
@@ -29,7 +54,8 @@ export default class BottomBar extends React.Component {
 }
 
 BottomBar.propTypes = {
-    navigation: PropTypes.any
+    navigation: PropTypes.any,
+    teams: PropTypes.object
 }
 
 const styles = StyleSheet.create({
@@ -69,3 +95,17 @@ const styles = StyleSheet.create({
         fontWeight: "900",
     }
 })
+
+const mapStateToProps = ({ state }) => {
+    return {
+        teams: state.teams
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ saveRoundPoints, resetPoints }, dispatch)
+}
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+)(BottomBar)

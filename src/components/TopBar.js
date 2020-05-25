@@ -57,7 +57,7 @@ class TopBar extends React.Component {
 
     render() {
         const { isActive, bonus, score, name } = this.props;
-
+        const baseScore = 162
         return (
             <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
                 <View style={styles.bonusContainer}>
