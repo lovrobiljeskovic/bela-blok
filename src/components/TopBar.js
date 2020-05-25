@@ -35,45 +35,53 @@ class TopBar extends React.Component {
     //     }
     // }
 
-    onLayout = ({ nativeEvent: { layout }}, scoreType) => {
+    onLayout = ({ nativeEvent: { layout } }, scoreType) => {
         this.setState({ [scoreType === "bonus" ? "bonusContainerWidth" : "scoreContainerWidth"]: layout.width })
     }
-    
-    onTextLayout = ({ nativeEvent: { lines }}, scoreType) => {
-        const { name, updateTeam, teams} = this.props
+
+    onTextLayout = ({ nativeEvent: { lines } }, scoreType) => {
+        const { name, updateTeam, teams } = this.props
 
         const widthKey = scoreType === "bonus" ? "bonusCharWidth" : "scoreCharWidth"
         const containerKey = scoreType === "bonus" ? "bonusContainerWidth" : "scoreContainerWidth"
         const scoreToUpdate = scoreType === "bonus" ? 'bonus' : 'score'
-        
+
         if (lines[0].text.length === 1) {
             this.setState({ [widthKey]: lines[0].width })
         }
 
         if (this.state[containerKey] !== null && this.state[widthKey] !== null && lines[0].width + this.state[widthKey] >= this.state[containerKey]) {
-            updateTeam(name, {...teams[name], [scoreToUpdate]: {...teams[name][scoreToUpdate], charsDidExceedContainer: true }})
+            updateTeam(name, { ...teams[name], [scoreToUpdate]: { ...teams[name][scoreToUpdate], charsDidExceedContainer: true } })
         }
     }
 
     render() {
         const { isActive, bonus, score, name } = this.props;
         const baseScore = 162
+        const combinedScore = parseInt(score.number || '0') + parseInt(bonus.number || '0')
         return (
-            <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
-                <View style={styles.bonusContainer}>
-                    <Text style={styles.teamNameText}>
-                        {name}
-                    </Text>
-                    <Text style={styles.bonus} numberOfLines={1} onLayout={(e) => this.onLayout(e, "bonus")} onTextLayout={(e) => this.onTextLayout(e, "bonus")}>
-                        {bonus.number || "0"}
+            <View style={styles.wrapperContainer}>
+                <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
+                    <View style={styles.bonusContainer}>
+                        <Text style={styles.teamNameText}>
+                            {name}
+                        </Text>
+                        <Text style={styles.bonus} numberOfLines={1} onLayout={(e) => this.onLayout(e, "bonus")} onTextLayout={(e) => this.onTextLayout(e, "bonus")}>
+                            {bonus.number || "0"}
+                        </Text>
+                    </View>
+                    <View style={styles.scoreContainer}>
+                        <Text style={styles.score} numberOfLines={1} onLayout={(e) => this.onLayout(e, "score")} onTextLayout={(e) => this.onTextLayout(e, "score")}>
+                            {combinedScore}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.row}>
+                    <Text>
+                        KEKW
                     </Text>
                 </View>
-                <View style={styles.scoreContainer}>
-                    <Text style={styles.score} numberOfLines={1} onLayout={(e) => this.onLayout(e, "score")} onTextLayout={(e) => this.onTextLayout(e, "score")}>
-                        {score.number || "0"}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
@@ -106,6 +114,9 @@ const styles = StyleSheet.create({
     selectedRoot: {
         backgroundColor: 'rgb(46, 204, 113)'
     },
+    wrapperContainer: {
+        flex: 1
+    },
     bonusContainer: {
         flex: 1,
         marginRight: scale(2)
@@ -113,6 +124,12 @@ const styles = StyleSheet.create({
     scoreContainer: {
         flex: 2,
         marginLeft: scale(2)
+    },
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingTop: scale(1)
     },
     teamNameText: {
         fontSize: moderateScale(20, 0.1),

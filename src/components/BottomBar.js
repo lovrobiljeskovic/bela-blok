@@ -14,8 +14,8 @@ class BottomBar extends React.Component {
 
     handleSaveRoundPoints = () => {
         const { teams, saveRoundPoints, navigation, resetPoints } = this.props;
-        const miOverallScore = teams['Mi'].score.number + teams['Mi'].bonus.number
-        const viOverallScore = teams['Vi'].score.number + teams['Vi'].bonus.number
+        const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
+        const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
         const roundPoints = [
             {
                 score: teams['Mi'].score.number,

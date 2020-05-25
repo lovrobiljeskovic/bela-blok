@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgb(242, 242, 247)",
     },
     scoreTrackerContainer: {
-        flex: 30,
+        flex: 40,
     },
     row: {
         flexDirection: "row",

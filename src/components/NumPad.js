@@ -45,7 +45,7 @@ class NumPad extends React.Component {
                 if (scoreToUpdate === 'score') {
                     const baseScore = 162
                     const otherTeam = teams[selectedTeamName === 'Mi' ? 'Vi' : 'Mi']
-                    const otherTeamPoints = Math.max(baseScore - (selectedTeam[scoreToUpdate].number + number), 0) === 0 ? '' : baseScore - (selectedTeam[scoreToUpdate].number + number)
+                    const otherTeamPoints = String(Math.max(baseScore - (selectedTeam[scoreToUpdate].number + number), 0) === 0 ? '' : baseScore - (selectedTeam[scoreToUpdate].number + number))
                     updateTeam(otherTeam.name, { ...otherTeam, [scoreToUpdate]: { ...otherTeam[scoreToUpdate], number: otherTeamPoints } })
                 }
             }
