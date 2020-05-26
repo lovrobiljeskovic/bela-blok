@@ -27,7 +27,7 @@ class FirstScreen extends React.Component {
                             )
                         })}
                     </View>
-                    <View style={[styles.row, { flex: 20 }]}>
+                    <View style={[styles.row, { flex: 16 }]}>
                         <View style={[styles.container, { paddingLeft: scale(4), paddingRight: scale(2), paddingTop: scale(1), paddingBottom: scale(4) }]}>
                             <PointsBar title={"igra"} isActive={selectedPoints === 'igra'} />
                         </View>

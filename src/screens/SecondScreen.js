@@ -20,7 +20,8 @@ class SecondScreen extends React.Component {
                     />
                 </View>
                 <View style={styles.overallScoresContainer}>
-
+                    <View style={{ flex: 1 }}>
+                    </View>
                 </View>
                 <View style={styles.novaButtonContainer}>
                     <View style={{ flex: 1 }}>

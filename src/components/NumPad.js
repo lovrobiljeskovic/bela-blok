@@ -18,6 +18,11 @@ class NumPad extends React.Component {
         const { updateTeam, selectedTeamName, teams } = this.props
 
         updateTeam(selectedTeamName, { ...teams[selectedTeamName], bonus: { number: "", charsDidExceedContainer: false }, score: { number: "", charsDidExceedContainer: false } })
+
+        const otherTeam = teams[selectedTeamName === 'Mi' ? 'Vi' : 'Mi']
+        const otherTeamPoints = 162
+        updateTeam(otherTeam.name, { ...otherTeam, ["score"]: { ...otherTeam["score"], number: otherTeamPoints } })
+    
         this.areButtonsEnabled = true
     }
 
@@ -28,6 +33,14 @@ class NumPad extends React.Component {
         const selectedTeam = teams[selectedTeamName]
 
         updateTeam(selectedTeamName, { ...selectedTeam, [scoreToUpdate]: { ...selectedTeam[scoreToUpdate], number: selectedTeam[scoreToUpdate].number.slice(0, -1), charsDidExceedContainer: false } })
+
+        if (scoreToUpdate === 'score') {
+            const baseScore = 162
+            const otherTeam = teams[selectedTeamName === 'Mi' ? 'Vi' : 'Mi']
+            const otherTeamPoints = String(Math.max(baseScore - (selectedTeam[scoreToUpdate].number.slice(0, -1)), 0) === 0 ? '' : baseScore - (selectedTeam[scoreToUpdate].number.slice(0, -1) ))
+            updateTeam(otherTeam.name, { ...otherTeam, [scoreToUpdate]: { ...otherTeam[scoreToUpdate], number: otherTeamPoints } })
+        }
+
         this.areButtonsEnabled = true
     }
 

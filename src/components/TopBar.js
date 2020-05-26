@@ -59,9 +59,10 @@ class TopBar extends React.Component {
         const { isActive, bonus, score, name } = this.props;
         const baseScore = 162
         const combinedScore = parseInt(score.number || '0') + parseInt(bonus.number || '0')
+        
         return (
             <View style={styles.wrapperContainer}>
-                <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.selectedRoot] : styles.root}>
+                <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.rootPadding, styles.selectedRoot] : [styles.root, styles.rootPadding]}>
                     <View style={styles.bonusContainer}>
                         <Text style={styles.teamNameText}>
                             {name}
@@ -72,13 +73,13 @@ class TopBar extends React.Component {
                     </View>
                     <View style={styles.scoreContainer}>
                         <Text style={styles.score} numberOfLines={1} onLayout={(e) => this.onLayout(e, "score")} onTextLayout={(e) => this.onTextLayout(e, "score")}>
-                            {combinedScore}
+                            {score.number || "0"}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={styles.row}>
-                    <Text>
-                        KEKW
+                <View style={[styles.row, styles.rootPadding]}>
+                    <Text style={styles.overallPointsText}>
+                        {`Σ ${combinedScore}`}
                     </Text>
                 </View>
             </View>
@@ -103,13 +104,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: scale(4),
+        borderWidth: 1,
+        borderColor: "rgb(228, 228, 228)"
+    },
+    rootPadding: {
         paddingTop: scale(1),
         paddingRight: scale(8),
         paddingBottom: scale(1),
         paddingLeft: scale(8),
-        borderRadius: scale(4),
-        borderWidth: 1,
-        borderColor: "rgb(228, 228, 228)"
     },
     selectedRoot: {
         backgroundColor: 'rgb(46, 204, 113)'
@@ -126,10 +129,11 @@ const styles = StyleSheet.create({
         marginLeft: scale(2)
     },
     row: {
-        flex: 1,
+        flexShrink: 1,  
+        flexGrow: 0,
+        flexBasis: "auto",
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        paddingTop: scale(1)
     },
     teamNameText: {
         fontSize: moderateScale(20, 0.1),
@@ -148,6 +152,12 @@ const styles = StyleSheet.create({
         color: 'rgb(58, 58, 60)',
         textAlign: "right",
         fontVariant: ["tabular-nums"]
+    },
+    overallPointsText: {
+        fontSize: moderateScale(16, 0.1),
+        fontWeight: "600",
+        color: 'rgb(58, 58, 60)',
+        fontVariant: ["tabular-nums"],
     }
 })
 
