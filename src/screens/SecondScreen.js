@@ -9,8 +9,13 @@ import { scale, moderateScale } from '../utils/scalingUtils';
 import { Divider } from "react-native-elements"
 
 class SecondScreen extends React.Component {
+
     render() {
         const { navigation, overallPoints } = this.props;
+        const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
+            return [acc[0] + roundPoints[0].combinedPoints, acc[1] + roundPoints[1].combinedPoints]
+        }, [0, 0])
+        console.log('oof', combinedTeamRoundPoints)
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.roundPointsContainer}>
@@ -30,11 +35,12 @@ class SecondScreen extends React.Component {
                             renderItem={({ item }) => <RoundPointsRow item={item} />}
                         />
                     </View>
-
                 </View>
                 <View style={styles.overallScoresContainer}>
                     <View style={{ flex: 1 }}>
-
+                        {combinedTeamRoundPoints.map((teamRoundPoints) => {
+                            <Text>{teamRoundPoints}</Text>
+                        })}
                     </View>
                 </View>
                 <View style={styles.novaButtonContainer}>

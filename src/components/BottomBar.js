@@ -33,16 +33,16 @@ class BottomBar extends React.Component {
         resetPoints()
     }
 
+    // handleBackPress = () => {
+    //     const { navigation, resetPoints} = this.props;
+    //     navigation.navigate('SecondScreen')
+    //     resetPoints()
+    // }
+
     render() {
-        const { navigation } = this.props
 
         return (
             <View style={styles.root}>
-                <View style={[styles.container, { paddingLeft: scale(2), paddingRight: scale(1) }]}>
-                    <TouchableOpacity onPress={() => navigation.navigate('SecondScreen')} style={styles.goBackButton}>
-                        <FontAwesomeIcon icon={faChevronLeft} color='white' size={35} />
-                    </TouchableOpacity>
-                </View>
                 <View style={[styles.container, { paddingLeft: scale(1), paddingRight: scale(2) }]}>
                     <TouchableOpacity onPress={this.handleSaveRoundPoints} style={styles.confirmationButton}>
                         <Text style={styles.title}>potvrdi</Text>
@@ -69,15 +69,15 @@ const styles = StyleSheet.create({
         paddingTop: scale(2),
         paddingBottom: scale(2),
     },
-    goBackButton: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: 'rgb(255, 69, 58)',
-        borderRadius: scale(4),
-        borderWidth: 1,
-        borderColor: "rgb(228, 228, 228)"
-    },
+    // goBackButton: {
+    //     flex: 1,
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     backgroundColor: 'rgb(255, 69, 58)',
+    //     borderRadius: scale(4),
+    //     borderWidth: 1,
+    //     borderColor: "rgb(228, 228, 228)"
+    // },
     confirmationButton: {
         flex: 3,
         alignItems: "center",
@@ -103,7 +103,7 @@ const mapStateToProps = ({ state }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ saveRoundPoints, resetPoints }, dispatch)
+    return bindActionCreators({ saveRoundPoints, resetPoints, }, dispatch)
 }
 
 export default compose(
