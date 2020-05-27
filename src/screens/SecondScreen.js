@@ -6,6 +6,7 @@ import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity } from "react-native";
 import { scale, moderateScale } from '../utils/scalingUtils';
+import { Divider } from "react-native-elements"
 
 class SecondScreen extends React.Component {
     render() {
@@ -13,14 +14,27 @@ class SecondScreen extends React.Component {
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.roundPointsContainer}>
-                    <FlatList
-                        data={overallPoints}
-                        keyExtractor={(item, index) => `${index}`}
-                        renderItem={({ item }) => <RoundPointsRow item={item} />}
-                    />
+                    <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
+                        <View style={styles.teamNamesContainer}>
+                            <Text style={styles.teamName}>Mi</Text>
+                            <Text style={styles.teamName}>Vi</Text>
+                        </View>
+                        <View>
+                            <Divider />
+                        </View>
+                    </View>
+                    <View>
+                        <FlatList
+                            data={overallPoints}
+                            keyExtractor={(item, index) => `${index}`}
+                            renderItem={({ item }) => <RoundPointsRow item={item} />}
+                        />
+                    </View>
+
                 </View>
                 <View style={styles.overallScoresContainer}>
                     <View style={{ flex: 1 }}>
+
                     </View>
                 </View>
                 <View style={styles.novaButtonContainer}>
@@ -71,15 +85,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         padding: scale(2)
     },
+    teamNamesContainer: {
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: "auto",
+        flexDirection: "row",
+        justifyContent: "space-around"
+    },
+    teamName: {
+        fontSize: moderateScale(48, 0.1),
+        color: 'rgb(58, 58, 60)',
+        fontWeight: "900",
+    },
     container: {
         height: scale(80),
-        paddingTop: scale(6),
-        paddingRight: scale(12),
+        paddingRight: scale(64),
         paddingBottom: scale(6),
-        paddingLeft: scale(12),
+        paddingLeft: scale(64),
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignItems: "center"
     },
     title: {
