@@ -37,9 +37,9 @@ class SecondScreen extends React.Component {
                     </View>
                 </View>
                 <View style={styles.overallScoresContainer}>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         {combinedTeamRoundPoints.map((teamRoundPoints) => {
-                            <Text>{teamRoundPoints}</Text>
+                            return <Text style={styles.overallScoresText}>{teamRoundPoints}</Text>
                         })}
                     </View>
                 </View>
@@ -83,8 +83,14 @@ const styles = StyleSheet.create({
         flex: 100
     },
     overallScoresContainer: {
-        flex: 50,
-        padding: scale(2)
+        flex: 20,
+        padding: scale(2),
+    },
+    overallScoresText: {
+        fontSize: moderateScale(36),
+        fontWeight: "900",
+        paddingLeft: scale(54),
+        paddingRight: scale(54)
     },
     novaButtonContainer: {
         flex: 20,
