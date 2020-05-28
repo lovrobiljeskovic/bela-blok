@@ -10,6 +10,7 @@ import NumPad from '../components/NumPad';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
 import { scale } from '../utils/scalingUtils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class FirstScreen extends React.Component {
     render() {
@@ -34,6 +35,20 @@ class FirstScreen extends React.Component {
                         <View style={[styles.container, { paddingLeft: scale(2), paddingRight: scale(4), paddingTop: scale(1), paddingBottom: scale(4) }]}>
                             <PointsBar title={"zvanje"} isActive={selectedPoints === 'zvanje'} />
                         </View>
+                    </View>
+                    <View style={[styles.row, { flex: 8, justifyContent: "center" }]}>
+                        <TouchableOpacity style={styles.colourButton}>
+                            <Text>P</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.colourButton}>
+                            <Text>K</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.colourButton}>
+                            <Text>T</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.colourButton}>
+                            <Text>H</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
@@ -77,6 +92,15 @@ const styles = StyleSheet.create({
     bottomBarContainer: {
         flex: 20,
     },
+    colourButton: {
+        marginRight: scale(4),
+        backgroundColor: 'grey',
+        width: scale(20),
+        height: scale(20),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 const mapStateToProps = ({ state }) => {

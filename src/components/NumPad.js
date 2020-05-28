@@ -49,10 +49,12 @@ class NumPad extends React.Component {
 
         if (this.areButtonsEnabled) {
             this.areButtonsEnabled = false
-
             const scoreToUpdate = selectedPoints === "igra" ? 'score' : 'bonus'
             const selectedTeam = teams[selectedTeamName]
-
+            if  (number === '0' && selectedTeam[scoreToUpdate].number === '') {
+                setTimeout(() => this.areButtonsEnabled = true, 200)
+                return
+            }
             if (!selectedTeam[scoreToUpdate].charsDidExceedContainer) {
                 updateTeam(selectedTeamName, { ...selectedTeam, [scoreToUpdate]: { ...selectedTeam[scoreToUpdate], number: selectedTeam[scoreToUpdate].number + number } })
                 if (scoreToUpdate === 'score') {
