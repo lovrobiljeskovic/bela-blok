@@ -9,13 +9,12 @@ import { scale, moderateScale } from '../utils/scalingUtils';
 import { Divider } from "react-native-elements"
 
 class SecondScreen extends React.Component {
-
     render() {
         const { navigation, overallPoints } = this.props;
         const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
             return [acc[0] + roundPoints[0].combinedPoints, acc[1] + roundPoints[1].combinedPoints]
         }, [0, 0])
-        console.log('oof', combinedTeamRoundPoints)
+
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.roundPointsContainer}>

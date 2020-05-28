@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Divider } from 'react-native-elements';
 import compose from "recompose/compose"
 import { connect } from "react-redux"
@@ -9,12 +9,26 @@ import BottomBar from '../components/BottomBar';
 import NumPad from '../components/NumPad';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
-import { scale } from '../utils/scalingUtils';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { scale, verticalScale } from '../utils/scalingUtils';
 
 class FirstScreen extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            currentlyActiveColorButton: 0
+        }
+    }
+
+    handleColorButtonPressed = (index) => {
+        this.setState({ currentlyActiveColorButton: index })
+    }
+
     render() {
+        const { currentlyActiveColorButton } = this.state
         const { navigation, teams, selectedPoints, selectedTeamName } = this.props;
+
+        const colorButtons = ["P", "K", "L", "F"]
 
         return (
             <SafeAreaView style={styles.root}>
@@ -36,19 +50,18 @@ class FirstScreen extends React.Component {
                             <PointsBar title={"zvanje"} isActive={selectedPoints === 'zvanje'} />
                         </View>
                     </View>
-                    <View style={[styles.row, { flex: 8, justifyContent: "center" }]}>
-                        <TouchableOpacity style={styles.colourButton}>
-                            <Text>P</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colourButton}>
-                            <Text>K</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colourButton}>
-                            <Text>T</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.colourButton}>
-                            <Text>H</Text>
-                        </TouchableOpacity>
+                </View>
+                <View style={styles.colorButtonsRoot}>
+                    <View style={[styles.row, { flex: 1, justifyContent: "center", alignItems: "center" }]}>
+                        {colorButtons.map((button, index) => {
+                            return (
+                                <TouchableOpacity onPress={() => this.handleColorButtonPressed(index)} disabled={currentlyActiveColorButton === index} style={[styles.colorButtonContainer, { marginRight: index === colorButtons.length - 1 ? 0 : verticalScale(16) }, index === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
+                                    <View style={styles.colorButton}>
+                                        <Text>{button}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })}
                     </View>
                 </View>
                 <View style={styles.numPadContainer}>
@@ -92,14 +105,23 @@ const styles = StyleSheet.create({
     bottomBarContainer: {
         flex: 20,
     },
-    colourButton: {
-        marginRight: scale(4),
+    colorButtonsRoot: {
+        flex: 10,
+    },
+    colorButtonContainer: {
         backgroundColor: 'grey',
-        width: scale(20),
-        height: scale(20),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: "center",
+        borderRadius: 1000,
+        width: verticalScale(32),
+        height: verticalScale(32),
+    },
+    disabledColorButtonContainer: {
+        backgroundColor: "teal"
+    },
+    colorButton: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
 
