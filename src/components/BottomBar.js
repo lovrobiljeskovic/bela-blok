@@ -13,21 +13,27 @@ import { bindActionCreators } from "redux"
 class BottomBar extends React.Component {
 
     handleSaveRoundPoints = () => {
-        const { teams, saveRoundPoints, navigation, resetPoints } = this.props;
+        const { teams, saveRoundPoints, navigation, resetPoints, currentlyActiveColorButton } = this.props;
         const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
         const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
-        const roundPoints = [
-            {
-                score: teams['Mi'].score.number,
-                bonus: teams['Mi'].bonus.number,
-                combinedPoints: miOverallScore
-            },
-            {
-                score: teams['Vi'].score.number,
-                bonus: teams['Vi'].bonus.number,
-                combinedPoints: viOverallScore
-            }
-        ]
+
+        const roundPoints = {
+            teams: [
+                {
+                    score: teams['Mi'].score.number,
+                    bonus: teams['Mi'].bonus.number,
+                    combinedPoints: miOverallScore,
+                },
+                {
+                    score: teams['Vi'].score.number,
+                    bonus: teams['Vi'].bonus.number,
+                    combinedPoints: viOverallScore,
+                }
+            ],
+            currentlyActiveColorButton
+        }
+
+
         saveRoundPoints(roundPoints)
         navigation.navigate('SecondScreen')
         resetPoints()

@@ -10,9 +10,10 @@ import { Divider } from "react-native-elements"
 
 class SecondScreen extends React.Component {
     render() {
-        const { navigation, overallPoints } = this.props;
+        const { navigation, overallPoints } = this.props
+
         const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
-            return [acc[0] + roundPoints[0].combinedPoints, acc[1] + roundPoints[1].combinedPoints]
+            return [acc[0] + roundPoints.teams[0].combinedPoints, acc[1] + roundPoints.teams[1].combinedPoints]
         }, [0, 0])
 
         return (
@@ -37,8 +38,8 @@ class SecondScreen extends React.Component {
                 </View>
                 <View style={styles.overallScoresContainer}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                        {combinedTeamRoundPoints.map((teamRoundPoints) => {
-                            return <Text style={styles.overallScoresText}>{teamRoundPoints}</Text>
+                        {combinedTeamRoundPoints.map((teamRoundPoints, index) => {
+                            return <Text key={index} style={styles.overallScoresText}>{teamRoundPoints}</Text>
                         })}
                     </View>
                 </View>
@@ -62,8 +63,9 @@ const RoundPointsRow = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{item[0].combinedPoints}</Text>
-            <Text style={styles.title}>{item[1].combinedPoints}</Text>
+            <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
+            <Text style={styles.title}>{item.currentlyActiveColorButton}</Text>
+            <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
         </View>
     )
 }

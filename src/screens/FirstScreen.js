@@ -55,7 +55,7 @@ class FirstScreen extends React.Component {
                     <View style={[styles.row, { flex: 1, justifyContent: "center", alignItems: "center" }]}>
                         {colorButtons.map((button, index) => {
                             return (
-                                <TouchableOpacity onPress={() => this.handleColorButtonPressed(index)} disabled={currentlyActiveColorButton === index} style={[styles.colorButtonContainer, { marginRight: index === colorButtons.length - 1 ? 0 : verticalScale(16) }, index === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
+                                <TouchableOpacity key={index} onPress={() => this.handleColorButtonPressed(index)} disabled={currentlyActiveColorButton === index} style={[styles.colorButtonContainer, { marginRight: index === colorButtons.length - 1 ? 0 : verticalScale(16) }, index === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
                                     <View style={styles.colorButton}>
                                         <Text>{button}</Text>
                                     </View>
@@ -71,7 +71,7 @@ class FirstScreen extends React.Component {
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <View style={{ flex: 1 }}>
-                        <BottomBar navigation={navigation} />
+                        <BottomBar navigation={navigation} currentlyActiveColorButton={currentlyActiveColorButton} />
                     </View>
                 </View>
             </SafeAreaView>
