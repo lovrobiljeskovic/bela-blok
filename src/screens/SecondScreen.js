@@ -6,18 +6,43 @@ import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image } from "react-native";
 import { scale, moderateScale, getWindowWidth } from '../utils/scalingUtils';
-import { Divider } from "react-native-elements"
+import { Divider, Overlay } from "react-native-elements"
 
 class SecondScreen extends React.Component {
-    render() {
-        const { navigation, overallPoints } = this.props
 
-        const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
+    constructor(props) {
+        super(props)
+        this.state = {
+            didGameEnd: false
+        }
+    }
+
+    calculateCombinedTeamRoundPoints = () => {
+        const { overallPoints } = this.props;
+        return overallPoints.reduce((acc, roundPoints) => {
             return [acc[0] + roundPoints.teams[0].combinedPoints, acc[1] + roundPoints.teams[1].combinedPoints]
         }, [0, 0])
+    }
 
+    componentDidMount = () => {
+        const combinedTeamRoundPoints = this.calculateCombinedTeamRoundPoints()
+        if (combinedTeamRoundPoints[0] >= 1001 || combinedTeamRoundPoints[1] >= 1001) {
+            this.setState({
+                didGameEnd: true
+            })
+        }
+    }
+
+    render() {
+        const { navigation, overallPoints } = this.props
+        const { didGameEnd } = this.state;
+        const combinedTeamRoundPoints = this.calculateCombinedTeamRoundPoints()
+        console.log('did game end', didGameEnd)
         return (
             <SafeAreaView style={styles.root}>
+                <Overlay fullScreen={true} isVisible={didGameEnd}>
+                    <Text>Hello from Overlay!</Text>
+                </Overlay>
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
                         <View style={styles.teamNamesContainer}>
@@ -30,7 +55,9 @@ class SecondScreen extends React.Component {
                     </View>
                     <View style={{ flex: 1 }}>
                         <FlatList
+                            ref={(ref) => this.flatList = ref}
                             data={overallPoints}
+                            onContentSizeChange={() => this.flatList.scrollToEnd()}
                             keyExtractor={(item, index) => `${index}`}
                             renderItem={({ item }) => <RoundPointsRow item={item} />}
                         />

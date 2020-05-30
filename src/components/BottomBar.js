@@ -33,7 +33,6 @@ class BottomBar extends React.Component {
             currentlyActiveColorButton
         }
 
-
         saveRoundPoints(roundPoints)
         navigation.navigate('SecondScreen')
         resetPoints()
