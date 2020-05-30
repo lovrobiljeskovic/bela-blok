@@ -4,8 +4,8 @@ import compose from "recompose/compose"
 import { connect } from "react-redux"
 import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity } from "react-native";
-import { scale, moderateScale } from '../utils/scalingUtils';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image } from "react-native";
+import { scale, moderateScale, getWindowWidth } from '../utils/scalingUtils';
 import { Divider } from "react-native-elements"
 
 class SecondScreen extends React.Component {
@@ -28,16 +28,19 @@ class SecondScreen extends React.Component {
                             <Divider />
                         </View>
                     </View>
-                    <View>
+                    <View style={{ flex: 1 }}>
                         <FlatList
                             data={overallPoints}
                             keyExtractor={(item, index) => `${index}`}
                             renderItem={({ item }) => <RoundPointsRow item={item} />}
                         />
                     </View>
+                    <View>
+                        <Divider />
+                    </View>
                 </View>
                 <View style={styles.overallScoresContainer}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center" }}>
                         {combinedTeamRoundPoints.map((teamRoundPoints, index) => {
                             return <Text key={index} style={styles.overallScoresText}>{teamRoundPoints}</Text>
                         })}
@@ -64,7 +67,9 @@ const RoundPointsRow = (props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
-            <Text style={styles.title}>{item.currentlyActiveColorButton}</Text>
+            <View style={styles.iconContainer}>
+                <Image source={require("../images/acorn.png")} style={{ width: scale(32), height: scale(32) }} />
+            </View>
             <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
         </View>
     )
@@ -84,14 +89,14 @@ const styles = StyleSheet.create({
         flex: 100
     },
     overallScoresContainer: {
-        flex: 20,
+        flex: 40,
         padding: scale(2),
     },
     overallScoresText: {
         fontSize: moderateScale(36),
         fontWeight: "900",
         paddingLeft: scale(54),
-        paddingRight: scale(54)
+        paddingRight: scale(54),
     },
     novaButtonContainer: {
         flex: 20,
@@ -111,14 +116,31 @@ const styles = StyleSheet.create({
         fontWeight: "900",
     },
     container: {
+        position: "relative",
         height: scale(80),
-        paddingRight: scale(64),
+        paddingRight: scale(36),
         paddingBottom: scale(6),
-        paddingLeft: scale(64),
+        paddingLeft: scale(36),
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "white",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 1,
+        elevation: 3,
+    },
+    iconContainer: {
+        position: "absolute",
+        flex: 1,
+        justifyContent: "center",
+        flexDirection: "row",
+        width: getWindowWidth()
     },
     title: {
         fontSize: moderateScale(36),
