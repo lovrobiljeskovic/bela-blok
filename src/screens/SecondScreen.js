@@ -4,8 +4,8 @@ import compose from "recompose/compose"
 import { connect } from "react-redux"
 import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image } from "react-native";
-import { scale, moderateScale, getWindowWidth } from '../utils/scalingUtils';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image, Button } from "react-native";
+import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/scalingUtils';
 import { Divider, Overlay } from "react-native-elements"
 
 class SecondScreen extends React.Component {
@@ -32,17 +32,13 @@ class SecondScreen extends React.Component {
             })
         }
     }
-
     render() {
         const { navigation, overallPoints } = this.props
-        const { didGameEnd } = this.state;
         const combinedTeamRoundPoints = this.calculateCombinedTeamRoundPoints()
-        console.log('did game end', didGameEnd)
+        const { didGameEnd } = this.state
         return (
             <SafeAreaView style={styles.root}>
-                <Overlay fullScreen={true} isVisible={didGameEnd}>
-                    <Text>Hello from Overlay!</Text>
-                </Overlay>
+                <EndOfGameScreen combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} />
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
                         <View style={styles.teamNamesContainer}>
@@ -102,6 +98,32 @@ const RoundPointsRow = (props) => {
     )
 }
 
+const EndOfGameScreen = (props) => {
+    const { combinedTeamRoundPoints, didGameEnd } = props
+
+    return (
+
+        <Overlay style={styles.overlay} isVisible={didGameEnd}>
+            <View style={{ flex: 1, width: getWindowWidth() - scale(16), height: getWindowHeight() - scale(16) }}>
+                <View style={{ flex: 20, flexDirection: 'row' }}>
+                    <Text>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
+                </View>
+                <View style={{ flex: 50, flexDirection: 'row' }}>
+                    <Text>Mi</Text>
+                    <Text>Vi</Text>
+                </View>
+                <View style={{ flex: 50, flexDirection: 'row' }}>
+                    <Text>234124</Text>
+                    <Text>24242</Text>
+                </View>
+                <View style={{ flex: 20, flexDirection: 'row' }}>
+                    <TouchableOpacity><Text>zapocni novu igru</Text></TouchableOpacity>
+                </View>
+            </View>
+        </Overlay>
+    )
+}
+
 SecondScreen.propTypes = {
     navigation: PropTypes.any,
 };
@@ -112,6 +134,10 @@ const styles = StyleSheet.create({
         backgroundColor: "rgb(242, 242, 247)",
         margin: scale(2)
     },
+    overlay: {
+        flex: 1,
+    },
+
     roundPointsContainer: {
         flex: 100
     },
