@@ -4,16 +4,15 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { scale, moderateScale } from "../utils/scalingUtils"
-import { saveRoundPoints, resetPoints } from "../actions/actions"
+import { saveRoundPoints, resetTeamPoints } from "../actions/actions"
 import compose from "recompose/compose"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 
 
 class BottomBar extends React.Component {
-
     handleSaveRoundPoints = () => {
-        const { teams, saveRoundPoints, navigation, resetPoints, currentlyActiveColorButton } = this.props;
+        const { teams, saveRoundPoints, navigation, resetTeamPoints, currentlyActiveColorButton } = this.props;
         const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
         const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
 
@@ -35,14 +34,8 @@ class BottomBar extends React.Component {
 
         saveRoundPoints(roundPoints)
         navigation.navigate('SecondScreen')
-        resetPoints()
+        resetTeamPoints()
     }
-
-    // handleBackPress = () => {
-    //     const { navigation, resetPoints} = this.props;
-    //     navigation.navigate('SecondScreen')
-    //     resetPoints()
-    // }
 
     render() {
 
@@ -108,7 +101,7 @@ const mapStateToProps = ({ state }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ saveRoundPoints, resetPoints, }, dispatch)
+    return bindActionCreators({ saveRoundPoints, resetTeamPoints, }, dispatch)
 }
 
 export default compose(

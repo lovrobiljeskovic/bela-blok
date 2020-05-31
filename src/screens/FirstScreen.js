@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
+import React, { Fragment } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { Divider } from 'react-native-elements';
 import compose from "recompose/compose"
 import { connect } from "react-redux"
@@ -31,12 +31,12 @@ class FirstScreen extends React.Component {
         const colorButtons = ["P", "K", "L", "F"]
 
         return (
-            <SafeAreaView style={styles.root}>
+            <>
                 <View style={styles.scoreTrackerContainer}>
                     <View style={[styles.row, { flex: 20 }]}>
                         {Object.values(teams).sort((a, b) => a.name > b.name).map((team, idx) => {
                             return (
-                                <View style={[styles.container, { paddingLeft: idx === 0 ? scale(4) : scale(2), paddingRight: idx === 1 ? scale(4) : scale(2), paddingBottom: scale(1), paddingTop: scale(4) }]} key={idx}>
+                                <View style={[styles.container, { paddingLeft: idx === 0 ? scale(4) : scale(2), paddingRight: idx === 1 ? scale(4) : scale(2), paddingBottom: scale(1) }]} key={idx}>
                                     <TopBar isActive={selectedTeamName === team.name} {...team} />
                                 </View>
                             )
@@ -74,7 +74,7 @@ class FirstScreen extends React.Component {
                         <BottomBar navigation={navigation} currentlyActiveColorButton={currentlyActiveColorButton} />
                     </View>
                 </View>
-            </SafeAreaView>
+            </>
         )
     }
 }
@@ -87,7 +87,6 @@ FirstScreen.propTypes = {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: "rgb(242, 242, 247)",
     },
     scoreTrackerContainer: {
         flex: 40,

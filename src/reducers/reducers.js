@@ -13,7 +13,8 @@ let INITIAL_STATE = {
             bonus: { number: "", charsDidExceedContainer: false },
             name: "Vi"
         }
-    }
+    },
+    gameWins: { "Mi": 0, "Vi": 0 }
 }
 
 const reducers = (state = INITIAL_STATE, action) => {
@@ -41,12 +42,22 @@ const reducers = (state = INITIAL_STATE, action) => {
                 ...state,
                 overallPoints: [...state.overallPoints, action.payload]
             }
-        case "RESET_POINTS":
+        case "RESET_TEAM_POINTS":
             return {
                 ...state,
                 teams: INITIAL_STATE.teams
             }
-
+        case "UPDATE_GAME_WINS":
+            return {
+                ...state,
+                gameWins: action.payload
+            }
+        case "RESET_ALL_POINTS":
+            return {
+                ...state,
+                teams: INITIAL_STATE.teams,
+                overallPoints: []
+            }
         default:
             return state
     }

@@ -18,7 +18,15 @@ export const saveRoundPoints = (roundPoints) => ({
     payload: roundPoints
 })
 
-export const resetPoints = () => ({
-    type: "RESET_POINTS"
+export const resetTeamPoints = () => ({
+    type: "RESET_TEAM_POINTS"
 })
 
+export const resetAllPoints = () => ({
+    type: "RESET_ALL_POINTS"
+})
+
+export const updateGameWins = (gameWins) => ({
+    type: "UPDATE_GAME_WINS",
+    payload: gameWins
+})

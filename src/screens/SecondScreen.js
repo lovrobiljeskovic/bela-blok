@@ -1,44 +1,60 @@
-import React from "react"
+import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import compose from "recompose/compose"
 import { connect } from "react-redux"
 import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image, Button } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image, StatusBar, Platform } from "react-native";
 import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/scalingUtils';
 import { Divider, Overlay } from "react-native-elements"
+import { updateGameWins, resetAllPoints } from "../actions/actions"
 
 class SecondScreen extends React.Component {
-
     constructor(props) {
         super(props)
-        this.state = {
-            didGameEnd: false
-        }
-    }
 
-    calculateCombinedTeamRoundPoints = () => {
-        const { overallPoints } = this.props;
-        return overallPoints.reduce((acc, roundPoints) => {
-            return [acc[0] + roundPoints.teams[0].combinedPoints, acc[1] + roundPoints.teams[1].combinedPoints]
-        }, [0, 0])
+        this.state = {
+            didGameEnd: false,
+            combinedTeamRoundPoints: []
+        }
     }
 
     componentDidMount = () => {
-        const combinedTeamRoundPoints = this.calculateCombinedTeamRoundPoints()
-        if (combinedTeamRoundPoints[0] >= 1001 || combinedTeamRoundPoints[1] >= 1001) {
-            this.setState({
-                didGameEnd: true
-            })
+        const { overallPoints, gameWins, updateGameWins } = this.props
+
+        const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
+            return [acc[0] + roundPoints.teams[0].combinedPoints, acc[1] + roundPoints.teams[1].combinedPoints]
+        }, [0, 0])
+
+        const winningTeam = combinedTeamRoundPoints[0] >= 1001 ? "Mi" : (combinedTeamRoundPoints[1] >= 1001 ? "Vi" : null)
+
+        if (winningTeam) {
+            updateGameWins({...gameWins, [winningTeam]: gameWins[winningTeam] + 1 })
+            this.setState({ didGameEnd: true, combinedTeamRoundPoints: [] })
+        } else {
+            this.setState({ combinedTeamRoundPoints })
         }
     }
+
+    handleNewGamePressed = () => {
+        const { navigation, resetAllPoints } = this.props
+
+        this.setState({ didGameEnd: false }, () => {
+            resetAllPoints()
+            navigation.navigate("FirstScreen")
+        })
+        
+    }
+
     render() {
-        const { navigation, overallPoints } = this.props
-        const combinedTeamRoundPoints = this.calculateCombinedTeamRoundPoints()
-        const { didGameEnd } = this.state
+        const { navigation, overallPoints, gameWins } = this.props
+        const { didGameEnd, combinedTeamRoundPoints } = this.state
+
         return (
-            <SafeAreaView style={styles.root}>
-                <EndOfGameScreen combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} />
+            <>
+                {didGameEnd &&
+                    <EndOfGameScreen combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} gameWins={gameWins} handleNewGamePressed={this.handleNewGamePressed} />
+                }
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
                         <View style={styles.teamNamesContainer}>
@@ -79,7 +95,7 @@ class SecondScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </SafeAreaView>
+            </>
         );
     }
 }
@@ -99,25 +115,44 @@ const RoundPointsRow = (props) => {
 }
 
 const EndOfGameScreen = (props) => {
-    const { combinedTeamRoundPoints, didGameEnd } = props
+    const { combinedTeamRoundPoints, didGameEnd, gameWins, handleNewGamePressed } = props
 
     return (
-
-        <Overlay style={styles.overlay} isVisible={didGameEnd}>
-            <View style={{ flex: 1, width: getWindowWidth() - scale(16), height: getWindowHeight() - scale(16) }}>
-                <View style={{ flex: 20, flexDirection: 'row' }}>
-                    <Text>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
+        <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(28), height: getWindowHeight() - scale(88) }}>
+            <View style={{ flex: 1 }}>
+                <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
+                    <Text style={[styles.text, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
                 </View>
-                <View style={{ flex: 50, flexDirection: 'row' }}>
-                    <Text>Mi</Text>
-                    <Text>Vi</Text>
+                <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
+                    <View style={{ flex: 1, paddingLeft: scale(24), paddingRight: scale(24) }}>
+                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Mi</Text>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Vi</Text>
+                        </View>
+                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Mi"]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Vi"]}</Text>
+                        </View>
+                    </View>
                 </View>
-                <View style={{ flex: 50, flexDirection: 'row' }}>
-                    <Text>234124</Text>
-                    <Text>24242</Text>
+                <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
+                    <View style={{ flex: 1 }}>
+                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderTopLeftRadius: scale(12), borderTopRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>1082</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>728</Text>
+                        </View>
+                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderBottomLeftRadius: scale(12), borderBottomRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>442</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>208</Text>
+                        </View>
+                    </View>
                 </View>
-                <View style={{ flex: 20, flexDirection: 'row' }}>
-                    <TouchableOpacity><Text>zapocni novu igru</Text></TouchableOpacity>
+                <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity style={styles.confirmationButton} onPress={handleNewGamePressed}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "900" }]}>zapocni novu igru</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Overlay>
@@ -132,12 +167,9 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: "rgb(242, 242, 247)",
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         margin: scale(2)
     },
-    overlay: {
-        flex: 1,
-    },
-
     roundPointsContainer: {
         flex: 100
     },
@@ -216,18 +248,39 @@ const styles = StyleSheet.create({
         borderRadius: scale(4),
         borderWidth: 1,
         borderColor: "rgb(228, 228, 228)",
-
     },
+    centeredView: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    shrinkView: {
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: "auto"
+    },
+    numberText: {
+        color: 'rgb(58, 58, 60)',
+        fontVariant: ["tabular-nums"],
+    },
+    text: {
+        color: 'rgb(58, 58, 60)',
+        fontVariant: ["small-caps"],
+    }
 });
 
 const mapStateToProps = ({ state }) => {
     return {
         selectedTeamName: state.selectedTeamName,
         teams: state.teams,
-        overallPoints: state.overallPoints
+        overallPoints: state.overallPoints,
+        gameWins: state.gameWins
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ updateGameWins, resetAllPoints }, dispatch)
+}
+
 export default compose(
-    connect(mapStateToProps, null),
+    connect(mapStateToProps, mapDispatchToProps),
 )(SecondScreen)
