@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Platform, Image } from 'react-native'
 import { Divider } from 'react-native-elements';
 import compose from "recompose/compose"
 import { connect } from "react-redux"
@@ -28,8 +28,6 @@ class FirstScreen extends React.Component {
         const { currentlyActiveColorButton } = this.state
         const { navigation, teams, selectedPoints, selectedTeamName } = this.props;
 
-        const colorButtons = ["P", "K", "L", "F"]
-
         return (
             <>
                 <View style={styles.scoreTrackerContainer}>
@@ -53,12 +51,10 @@ class FirstScreen extends React.Component {
                 </View>
                 <View style={styles.colorButtonsRoot}>
                     <View style={[styles.row, { flex: 1, justifyContent: "center", alignItems: "center" }]}>
-                        {colorButtons.map((button, index) => {
+                        {[0, 1, 2, 3].map((numberOfColor) => {
                             return (
-                                <TouchableOpacity key={index} onPress={() => this.handleColorButtonPressed(index)} disabled={currentlyActiveColorButton === index} style={[styles.colorButtonContainer, { marginRight: index === colorButtons.length - 1 ? 0 : verticalScale(24) }, index === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
-                                    <View style={styles.colorButton}>
-                                        <Text>{button}</Text>
-                                    </View>
+                                <TouchableOpacity key={numberOfColor} onPress={() => this.handleColorButtonPressed(numberOfColor)} >
+                                    <Image source={require('../images/tref.png')} style={{ width: scale(16), height: scale(16) }}></Image>
                                 </TouchableOpacity>
                             )
                         })}

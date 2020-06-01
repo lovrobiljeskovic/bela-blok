@@ -99,14 +99,30 @@ class SecondScreen extends React.Component {
     }
 }
 
+const getCurrentColor = (index) => {
+    console.log('INDEX', index)
+    switch (index) {
+        case 0:
+            return require('../images/tref.png')
+        case 1:
+            return require('../images/pik.gif')
+        case 2: 
+            return require('../images/kara.gif')
+        case 3:
+            return require('../images/herc.gif')
+        default:
+            return require('../images/acorn.png')
+    }
+}
+
 const RoundPointsRow = (props) => {
     const { item } = props
-
+    console.log('item', item)
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
             <View style={styles.iconContainer}>
-                <Image source={require("../images/acorn.png")} style={{ width: scale(32), height: scale(32) }} />
+                <Image source={getCurrentColor(item.currentlyActiveColorButton)} style={{ width: scale(32), height: scale(32) }} />
             </View>
             <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
         </View>
