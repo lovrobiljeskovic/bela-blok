@@ -52,9 +52,9 @@ class FirstScreen extends React.Component {
                 </View>
                 <View style={styles.colorButtonsRoot}>
                     <View style={[styles.row, { flex: 1, justifyContent: "center", alignItems: "center" }]}>
-                        {[0, 1, 2, 3].map((numberOfColor) => {
+                        {[0, 1, 2, 3].map((numberOfColor, idx, arr) => {
                             return (
-                                <TouchableOpacity key={numberOfColor} onPress={() => this.handleColorButtonPressed(numberOfColor)} disabled={currentlyActiveColorButton === numberOfColor} style={[styles.colorButtonContainer, { marginRight: numberOfColor === this.length - 1 ? 0 : verticalScale(24) }, numberOfColor === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
+                                <TouchableOpacity key={numberOfColor} onPress={() => this.handleColorButtonPressed(numberOfColor)} disabled={currentlyActiveColorButton === numberOfColor} style={[styles.colorButtonContainer, { marginRight: numberOfColor === arr.length - 1 ? 0 : verticalScale(24) }, numberOfColor === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
                                     <Image source={getImageFromIndex(numberOfColor, currentlyActiveColorButton !== numberOfColor)} resizeMode='stretch' style={{ width: scale(24), height: scale(24) }}></Image>
                                 </TouchableOpacity>
                             )

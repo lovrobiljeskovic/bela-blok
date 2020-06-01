@@ -102,7 +102,7 @@ class SecondScreen extends React.Component {
 
 const RoundPointsRow = (props) => {
     const { item } = props
-    console.log('item', item)
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
