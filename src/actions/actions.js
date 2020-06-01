@@ -30,3 +30,8 @@ export const updateGameWins = (gameWins) => ({
     type: "UPDATE_GAME_WINS",
     payload: gameWins
 })
+
+export const setSelectedMaxPoints = (buttonIndex) => ({
+    type: "SET_SELECTED_MAX_POINTS",
+    payload: buttonIndex
+})

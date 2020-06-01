@@ -14,7 +14,8 @@ let INITIAL_STATE = {
             name: "Vi"
         }
     },
-    gameWins: { "Mi": 0, "Vi": 0 }
+    gameWins: { "Mi": 0, "Vi": 0 },
+    selectedMaxPoints: 1001
 }
 
 const reducers = (state = INITIAL_STATE, action) => {
@@ -57,6 +58,11 @@ const reducers = (state = INITIAL_STATE, action) => {
                 ...state,
                 teams: INITIAL_STATE.teams,
                 overallPoints: []
+            }
+        case "SET_SELECTED_MAX_POINTS":
+            return {
+                ...state,
+                selectedMaxPoints: action.payload
             }
         default:
             return state

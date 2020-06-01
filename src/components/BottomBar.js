@@ -16,6 +16,8 @@ class BottomBar extends React.Component {
         const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
         const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
 
+        if (miOverallScore === 0 && viOverallScore === 0) return
+
         const roundPoints = {
             teams: [
                 {
@@ -38,7 +40,6 @@ class BottomBar extends React.Component {
     }
 
     render() {
-
         return (
             <View style={styles.root}>
                 <View style={[styles.container, { paddingLeft: scale(1), paddingRight: scale(2) }]}>

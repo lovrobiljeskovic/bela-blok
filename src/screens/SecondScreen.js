@@ -20,17 +20,17 @@ class SecondScreen extends React.Component {
     }
 
     componentDidMount = () => {
-        const { overallPoints, gameWins, updateGameWins } = this.props
+        const { overallPoints, gameWins, updateGameWins, selectedMaxPoints } = this.props
 
         const combinedTeamRoundPoints = overallPoints.reduce((acc, roundPoints) => {
             return [acc[0] + roundPoints.teams[0].combinedPoints, acc[1] + roundPoints.teams[1].combinedPoints]
         }, [0, 0])
 
-        const winningTeam = combinedTeamRoundPoints[0] >= 1001 ? "Mi" : (combinedTeamRoundPoints[1] >= 1001 ? "Vi" : null)
+        const winningTeam = combinedTeamRoundPoints[0] >= selectedMaxPoints ? "Mi" : (combinedTeamRoundPoints[1] >= selectedMaxPoints ? "Vi" : null)
 
         if (winningTeam) {
-            updateGameWins({...gameWins, [winningTeam]: gameWins[winningTeam] + 1 })
-            this.setState({ didGameEnd: true, combinedTeamRoundPoints: [] })
+            updateGameWins({ ...gameWins, [winningTeam]: gameWins[winningTeam] + 1 })
+            this.setState({ didGameEnd: true, combinedTeamRoundPoints })
         } else {
             this.setState({ combinedTeamRoundPoints })
         }
@@ -43,7 +43,6 @@ class SecondScreen extends React.Component {
             resetAllPoints()
             navigation.navigate("FirstScreen")
         })
-        
     }
 
     render() {
@@ -53,7 +52,7 @@ class SecondScreen extends React.Component {
         return (
             <>
                 {didGameEnd &&
-                    <EndOfGameScreen combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} gameWins={gameWins} handleNewGamePressed={this.handleNewGamePressed} />
+                    <EndOfGameScreen overallPoints={overallPoints} combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} gameWins={gameWins} handleNewGamePressed={this.handleNewGamePressed} />
                 }
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
@@ -115,10 +114,14 @@ const RoundPointsRow = (props) => {
 }
 
 const EndOfGameScreen = (props) => {
-    const { combinedTeamRoundPoints, didGameEnd, gameWins, handleNewGamePressed } = props
+    const { combinedTeamRoundPoints, didGameEnd, overallPoints, gameWins, handleNewGamePressed } = props
+
+    const totalBonus = overallPoints.reduce((acc, roundPoints) => {
+        return [acc[0] + parseInt(roundPoints.teams[0].bonus || "0"), acc[1] + parseInt(roundPoints.teams[1].bonus || "0")]
+    }, [0, 0])
 
     return (
-        <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(28), height: getWindowHeight() - scale(88) }}>
+        <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(28), height: getWindowHeight() - scale(80) }}>
             <View style={{ flex: 1 }}>
                 <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
                     <Text style={[styles.text, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
@@ -138,12 +141,12 @@ const EndOfGameScreen = (props) => {
                 <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
                     <View style={{ flex: 1 }}>
                         <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderTopLeftRadius: scale(12), borderTopRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>1082</Text>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>728</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{combinedTeamRoundPoints[0]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{combinedTeamRoundPoints[1]}</Text>
                         </View>
                         <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderBottomLeftRadius: scale(12), borderBottomRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>442</Text>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>208</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{totalBonus[0]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{totalBonus[1]}</Text>
                         </View>
                     </View>
                 </View>
@@ -273,7 +276,8 @@ const mapStateToProps = ({ state }) => {
         selectedTeamName: state.selectedTeamName,
         teams: state.teams,
         overallPoints: state.overallPoints,
-        gameWins: state.gameWins
+        gameWins: state.gameWins,
+        selectedMaxPoints: state.selectedMaxPoints
     }
 }
 
