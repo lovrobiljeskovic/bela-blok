@@ -10,6 +10,7 @@ import NumPad from '../components/NumPad';
 import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
 import { scale, verticalScale } from '../utils/scalingUtils';
+import { getImageFromIndex } from '../utils/imageUtils'
 
 class FirstScreen extends React.Component {
     constructor(props) {
@@ -53,8 +54,8 @@ class FirstScreen extends React.Component {
                     <View style={[styles.row, { flex: 1, justifyContent: "center", alignItems: "center" }]}>
                         {[0, 1, 2, 3].map((numberOfColor) => {
                             return (
-                                <TouchableOpacity key={numberOfColor} onPress={() => this.handleColorButtonPressed(numberOfColor)} >
-                                    <Image source={require('../images/tref.png')} style={{ width: scale(16), height: scale(16) }}></Image>
+                                <TouchableOpacity key={numberOfColor} onPress={() => this.handleColorButtonPressed(numberOfColor)} disabled={currentlyActiveColorButton === numberOfColor} style={[styles.colorButtonContainer, { marginRight: numberOfColor === this.length - 1 ? 0 : verticalScale(24) }, numberOfColor === currentlyActiveColorButton && styles.disabledColorButtonContainer]}>
+                                    <Image source={getImageFromIndex(numberOfColor, currentlyActiveColorButton !== numberOfColor)} resizeMode='stretch' style={{ width: scale(24), height: scale(24) }}></Image>
                                 </TouchableOpacity>
                             )
                         })}
@@ -105,14 +106,8 @@ const styles = StyleSheet.create({
         marginTop: scale(12)
     },
     colorButtonContainer: {
-        backgroundColor: 'grey',
         alignItems: "center",
-        borderRadius: 1000,
-        width: verticalScale(32),
-        height: verticalScale(32),
-    },
-    disabledColorButtonContainer: {
-        backgroundColor: "teal"
+        justifyContent: 'center',
     },
     colorButton: {
         flex: 1,

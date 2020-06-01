@@ -8,6 +8,7 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image
 import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/scalingUtils';
 import { Divider, Overlay } from "react-native-elements"
 import { updateGameWins, resetAllPoints } from "../actions/actions"
+import { getImageFromIndex } from '../utils/imageUtils'
 
 class SecondScreen extends React.Component {
     constructor(props) {
@@ -99,22 +100,6 @@ class SecondScreen extends React.Component {
     }
 }
 
-const getCurrentColor = (index) => {
-    console.log('INDEX', index)
-    switch (index) {
-        case 0:
-            return require('../images/tref.png')
-        case 1:
-            return require('../images/pik.gif')
-        case 2: 
-            return require('../images/kara.gif')
-        case 3:
-            return require('../images/herc.gif')
-        default:
-            return require('../images/acorn.png')
-    }
-}
-
 const RoundPointsRow = (props) => {
     const { item } = props
     console.log('item', item)
@@ -122,7 +107,7 @@ const RoundPointsRow = (props) => {
         <View style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
             <View style={styles.iconContainer}>
-                <Image source={getCurrentColor(item.currentlyActiveColorButton)} style={{ width: scale(32), height: scale(32) }} />
+                <Image source={getImageFromIndex(item.currentlyActiveColorButton)} resizeMode='stretch' style={{ width: scale(32), height: scale(32) }} />
             </View>
             <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
         </View>
