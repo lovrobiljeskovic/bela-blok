@@ -4,47 +4,20 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { scale, moderateScale } from "../utils/scalingUtils"
-import { saveRoundPoints, resetTeamPoints } from "../actions/actions"
 import compose from "recompose/compose"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 
 
 class BottomBar extends React.Component {
-    handleSaveRoundPoints = () => {
-        const { teams, saveRoundPoints, navigation, resetTeamPoints, currentlyActiveColorButton } = this.props;
-        const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
-        const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
-
-        if (miOverallScore === 0 && viOverallScore === 0) return
-
-        const roundPoints = {
-            teams: [
-                {
-                    score: teams['Mi'].score.number,
-                    bonus: teams['Mi'].bonus.number,
-                    combinedPoints: miOverallScore,
-                },
-                {
-                    score: teams['Vi'].score.number,
-                    bonus: teams['Vi'].bonus.number,
-                    combinedPoints: viOverallScore,
-                }
-            ],
-            currentlyActiveColorButton
-        }
-
-        saveRoundPoints(roundPoints)
-        navigation.navigate('SecondScreen')
-        resetTeamPoints()
-    }
-
     render() {
+        const { isEditing, handleSaveEdit, handleSaveRoundPoints } = this.props
+
         return (
             <View style={styles.root}>
                 <View style={[styles.container, { paddingLeft: scale(1), paddingRight: scale(2) }]}>
-                    <TouchableOpacity onPress={this.handleSaveRoundPoints} style={styles.confirmationButton}>
-                        <Text style={styles.title}>potvrdi</Text>
+                    <TouchableOpacity onPress={isEditing ? handleSaveEdit : handleSaveRoundPoints} style={styles.confirmationButton}>
+                        <Text style={styles.title}>{isEditing ? "spremi" : "potvrdi"}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -101,10 +74,6 @@ const mapStateToProps = ({ state }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ saveRoundPoints, resetTeamPoints, }, dispatch)
-}
-
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, null),
 )(BottomBar)

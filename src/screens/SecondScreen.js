@@ -9,6 +9,7 @@ import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/
 import { Divider, Overlay } from "react-native-elements"
 import { updateGameWins, resetAllPoints } from "../actions/actions"
 import { getImageFromIndex } from '../utils/imageUtils'
+import { setTeams, resetTeamPoints } from "../actions/actions"
 
 class SecondScreen extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class SecondScreen extends React.Component {
     }
 
     render() {
-        const { navigation, overallPoints, gameWins } = this.props
+        const { navigation, overallPoints, gameWins, setTeams, resetTeamPoints } = this.props
         const { didGameEnd, combinedTeamRoundPoints } = this.state
 
         return (
@@ -71,7 +72,7 @@ class SecondScreen extends React.Component {
                             data={overallPoints}
                             onContentSizeChange={() => this.flatList.scrollToEnd()}
                             keyExtractor={(item, index) => `${index}`}
-                            renderItem={({ item }) => <RoundPointsRow item={item} />}
+                            renderItem={({ item, index }) => <RoundPointsRow index={index} item={item} navigation={navigation} setTeams={setTeams} />}
                         />
                     </View>
                     <View>
@@ -88,7 +89,7 @@ class SecondScreen extends React.Component {
                 <View style={styles.novaButtonContainer}>
                     <View style={{ flex: 1 }}>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("FirstScreen")}
+                            onPress={() => { resetTeamPoints(); navigation.navigate("FirstScreen", { isEditing: false }) }}
                             style={styles.confirmationButton}
                         >
                             <Text style={styles.buttonText}>nova</Text>
@@ -101,16 +102,34 @@ class SecondScreen extends React.Component {
 }
 
 const RoundPointsRow = (props) => {
-    const { item } = props
+    const { item, navigation, setTeams, index } = props
+
+    const handleRowPressed = () => {
+        const teams = {
+            "Mi": {
+                score: { number: item.teams[0].score, charsDidExceedContainer: false },
+                bonus: { number: item.teams[0].bonus, charsDidExceedContainer: false },
+                name: "Mi"
+            },
+            "Vi": {
+                score: { number: item.teams[1].score, charsDidExceedContainer: false },
+                bonus: { number: item.teams[1].score, charsDidExceedContainer: false },
+                name: "Vi"
+            }
+        }
+
+        setTeams(teams)
+        navigation.navigate("FirstScreen", { currentlyActiveColorButton: item.currentlyActiveColorButton, indexOfRow: index, isEditing: true })
+    }
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={handleRowPressed} style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
             <View style={styles.iconContainer}>
                 <Image source={getImageFromIndex(item.currentlyActiveColorButton)} resizeMode='stretch' style={{ width: scale(32), height: scale(32) }} />
             </View>
             <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -283,7 +302,7 @@ const mapStateToProps = ({ state }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ updateGameWins, resetAllPoints }, dispatch)
+    return bindActionCreators({ updateGameWins, resetAllPoints, setTeams, resetTeamPoints }, dispatch)
 }
 
 export default compose(

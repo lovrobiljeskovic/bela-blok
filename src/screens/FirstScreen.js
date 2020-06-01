@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform, Image } from 'react-native'
 import { Divider } from 'react-native-elements';
 import compose from "recompose/compose"
@@ -11,13 +11,52 @@ import PointsBar from '../components/PointsBar';
 import PropTypes from 'prop-types';
 import { scale, verticalScale } from '../utils/scalingUtils';
 import { getImageFromIndex } from '../utils/imageUtils'
+import { saveChangesToRow, saveRoundPoints, resetTeamPoints } from "../actions/actions"
 
 class FirstScreen extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            currentlyActiveColorButton: 0
+            currentlyActiveColorButton: 0,
+            isEditing: false,
+            editedRowIndex: null
+        }
+    }
+
+    componentDidMount = () => {
+        const { navigation } = this.props
+
+        navigation.addListener("focus", () => {
+            if (this.props.route.params && this.props.route.params.isEditing) {
+                this.setState({ isEditing: true, currentlyActiveColorButton: this.props.route.params.currentlyActiveColorButton, editedRowIndex: this.props.route.params.indexOfRow  })
+            }
+        })
+    }
+
+    calculateRoundPoints = () => {
+        const { currentlyActiveColorButton } = this.state
+        const { teams } = this.props
+
+        const miOverallScore = parseInt(teams['Mi'].score.number || '0') + parseInt(teams['Mi'].bonus.number || '0')
+        const viOverallScore = parseInt(teams['Vi'].score.number || '0') + parseInt(teams['Vi'].bonus.number || '0')
+
+        if (miOverallScore === 0 && viOverallScore === 0) return
+
+        return {
+            teams: [
+                {
+                    score: teams['Mi'].score.number,
+                    bonus: teams['Mi'].bonus.number,
+                    combinedPoints: miOverallScore,
+                },
+                {
+                    score: teams['Vi'].score.number,
+                    bonus: teams['Vi'].bonus.number,
+                    combinedPoints: viOverallScore,
+                }
+            ],
+            currentlyActiveColorButton
         }
     }
 
@@ -25,8 +64,26 @@ class FirstScreen extends React.Component {
         this.setState({ currentlyActiveColorButton: index })
     }
 
+    handleSaveRoundPoints = () => {
+        const { saveRoundPoints, navigation, resetTeamPoints } = this.props
+
+        const roundPoints = this.calculateRoundPoints()
+
+        saveRoundPoints(roundPoints)
+        navigation.navigate('SecondScreen')
+        resetTeamPoints()
+    }
+
+    handleSaveEdit = () => {
+        const { editedRowIndex } = this.state
+        const { saveChangesToRow, navigation } = this.props
+
+        saveChangesToRow(editedRowIndex, this.calculateRoundPoints())
+        this.setState({ isEditing: false }, () => navigation.navigate("SecondScreen"))
+    }
+
     render() {
-        const { currentlyActiveColorButton } = this.state
+        const { currentlyActiveColorButton, isEditing } = this.state
         const { navigation, teams, selectedPoints, selectedTeamName } = this.props;
 
         return (
@@ -68,7 +125,7 @@ class FirstScreen extends React.Component {
                 </View>
                 <View style={styles.bottomBarContainer}>
                     <View style={{ flex: 1 }}>
-                        <BottomBar navigation={navigation} currentlyActiveColorButton={currentlyActiveColorButton} />
+                        <BottomBar handleSaveRoundPoints={this.handleSaveRoundPoints} handleSaveEdit={this.handleSaveEdit} isEditing={isEditing} navigation={navigation} currentlyActiveColorButton={currentlyActiveColorButton} />
                     </View>
                 </View>
             </>
@@ -124,6 +181,10 @@ const mapStateToProps = ({ state }) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ saveChangesToRow, saveRoundPoints, resetTeamPoints }, dispatch)
+}
+
 export default compose(
-    connect(mapStateToProps, null),
+    connect(mapStateToProps, mapDispatchToProps),
 )(FirstScreen)

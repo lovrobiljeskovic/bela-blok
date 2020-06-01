@@ -38,10 +38,22 @@ const reducers = (state = INITIAL_STATE, action) => {
                     [action.payload.team]: action.payload.newState
                 }
             }
+        case "SET_TEAMS":
+            return {
+                ...state,
+                teams: action.payload
+            }
         case "SAVE_ROUND_POINTS":
             return {
                 ...state,
                 overallPoints: [...state.overallPoints, action.payload]
+            }
+        case "SAVE_CHANGES_TO_ROW": 
+            const arr = [...state.overallPoints]
+            arr.splice(action.payload.index, 1, action.payload.roundPoints)
+            return {
+                ...state,
+                overallPoints: arr
             }
         case "RESET_TEAM_POINTS":
             return {

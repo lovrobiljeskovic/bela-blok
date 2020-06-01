@@ -13,6 +13,11 @@ export const updateTeam = (team, newState) => ({
     payload: { team, newState }
 })
 
+export const setTeams = (teams) => ({
+    type: "SET_TEAMS",
+    payload: teams
+})
+
 export const saveRoundPoints = (roundPoints) => ({
     type: "SAVE_ROUND_POINTS",
     payload: roundPoints
@@ -34,4 +39,9 @@ export const updateGameWins = (gameWins) => ({
 export const setSelectedMaxPoints = (buttonIndex) => ({
     type: "SET_SELECTED_MAX_POINTS",
     payload: buttonIndex
+})
+
+export const saveChangesToRow = (index, roundPoints) => ({
+    type: "SAVE_CHANGES_TO_ROW",
+    payload: { index, roundPoints }
 })

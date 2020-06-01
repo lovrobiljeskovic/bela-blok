@@ -1,5 +1,4 @@
 export const getImageFromIndex = (index, isDisabled) => {
-    console.log('INDEX', index)
     switch (index) {
         case 0:
             if(isDisabled) {
