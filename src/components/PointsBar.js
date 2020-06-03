@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         paddingBottom: scale(3),
     },
     selectedRoot: {
-        backgroundColor: 'rgb(46, 204, 113)'
+        backgroundColor: '#2ecc71'
     },
     title: {
         fontSize: moderateScale(32, 0.25),

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         paddingLeft: scale(8),
     },
     selectedRoot: {
-        backgroundColor: 'rgb(46, 204, 113)'
+        backgroundColor: '#2ecc71'
     },
     wrapperContainer: {
         flex: 1

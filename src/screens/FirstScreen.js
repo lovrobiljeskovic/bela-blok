@@ -29,7 +29,7 @@ class FirstScreen extends React.Component {
 
         navigation.addListener("focus", () => {
             if (this.props.route.params && this.props.route.params.isEditing) {
-                this.setState({ isEditing: true, currentlyActiveColorButton: this.props.route.params.currentlyActiveColorButton, editedRowIndex: this.props.route.params.indexOfRow  })
+                this.setState({ isEditing: true, currentlyActiveColorButton: this.props.route.params.currentlyActiveColorButton, editedRowIndex: this.props.route.params.indexOfRow })
             }
         })
     }
@@ -69,9 +69,11 @@ class FirstScreen extends React.Component {
 
         const roundPoints = this.calculateRoundPoints()
 
-        saveRoundPoints(roundPoints)
-        navigation.navigate('SecondScreen')
-        resetTeamPoints()
+        if (roundPoints) {
+            saveRoundPoints(roundPoints)
+            navigation.navigate('SecondScreen')
+            resetTeamPoints()
+        }
     }
 
     handleSaveEdit = () => {

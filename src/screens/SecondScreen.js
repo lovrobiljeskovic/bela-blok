@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux"
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image, StatusBar, Platform } from "react-native";
 import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/scalingUtils';
 import { Divider, Overlay } from "react-native-elements"
+import { BlurView } from 'expo-blur'
 import { updateGameWins, resetAllPoints } from "../actions/actions"
 import { getImageFromIndex } from '../utils/imageUtils'
 import { setTeams, resetTeamPoints } from "../actions/actions"
@@ -96,6 +97,9 @@ class SecondScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {didGameEnd &&
+                    <BlurView intensity={100} style={StyleSheet.absoluteFill} />
+                }
             </>
         );
     }
@@ -125,8 +129,8 @@ const RoundPointsRow = (props) => {
     return (
         <TouchableOpacity onPress={handleRowPressed} style={styles.container}>
             <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
-            <View style={styles.iconContainer}>
-                <Image source={getImageFromIndex(item.currentlyActiveColorButton)} resizeMode='stretch' style={{ width: scale(32), height: scale(32) }} />
+            <View style={styles.absoluteContainer}>
+                <Image source={getImageFromIndex(item.currentlyActiveColorButton)} resizeMode='stretch' style={{ width: scale(24), height: scale(24) }} />
             </View>
             <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
         </TouchableOpacity>
@@ -141,7 +145,7 @@ const EndOfGameScreen = (props) => {
     }, [0, 0])
 
     return (
-        <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(28), height: getWindowHeight() - scale(80) }}>
+        <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(40), height: getWindowHeight() - scale(100), borderRadius: scale(8) }}>
             <View style={{ flex: 1 }}>
                 <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
                     <Text style={[styles.text, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
@@ -158,18 +162,26 @@ const EndOfGameScreen = (props) => {
                         </View>
                     </View>
                 </View>
-                <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
+                <View style={{ flex: 6 }} />
+                <View style={[styles.centeredView, { flex: 26, flexDirection: 'row' }]}>
                     <View style={{ flex: 1 }}>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderTopLeftRadius: scale(12), borderTopRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{combinedTeamRoundPoints[0]}</Text>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{combinedTeamRoundPoints[1]}</Text>
+                        <View style={[styles.pointsRowContainer]}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0]}</Text>
+                            <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
+                                <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>igra</Text>
+                            </View>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[1]}</Text>
                         </View>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around", margin: scale(8), borderColor: "darkgray", borderWidth: 1, borderBottomLeftRadius: scale(12), borderBottomRightRadius: scale(12), backgroundColor: "ghostwhite" }]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{totalBonus[0]}</Text>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(42, 0.1), fontWeight: "900" }]}>{totalBonus[1]}</Text>
+                        <View style={[styles.pointsRowContainer]}>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[0]}</Text>
+                            <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
+                                <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>zvanje</Text>
+                            </View>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[1]}</Text>
                         </View>
                     </View>
                 </View>
+                <View style={{ flex: 10 }} />
                 <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
                     <View style={{ flex: 1 }}>
                         <TouchableOpacity style={styles.confirmationButton} onPress={handleNewGamePressed}>
@@ -243,7 +255,7 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
         elevation: 3,
     },
-    iconContainer: {
+    absoluteContainer: {
         position: "absolute",
         flex: 1,
         justifyContent: "center",
@@ -267,7 +279,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingBottom: scale(3),
-        backgroundColor: 'rgb(46, 204, 113)',
+        backgroundColor: '#2ecc71',
         borderRadius: scale(4),
         borderWidth: 1,
         borderColor: "rgb(228, 228, 228)",
@@ -280,6 +292,25 @@ const styles = StyleSheet.create({
         flexGrow: 0,
         flexShrink: 1,
         flexBasis: "auto"
+    },
+    pointsRowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
+        margin: scale(10),
+        paddingLeft: scale(16),
+        paddingRight: scale(16),
+        backgroundColor: "#ecf0f1",
+        borderColor: "#ecf0f1",
+        shadowColor: "#ecf0f1",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 4,
+        elevation: 2,
     },
     numberText: {
         color: 'rgb(58, 58, 60)',

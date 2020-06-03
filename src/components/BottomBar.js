@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingBottom: scale(3),
-        backgroundColor: 'rgb(46, 204, 113)',
+        backgroundColor: '#2ecc71',
         borderRadius: scale(4),
         borderWidth: 1,
         borderColor: "rgb(228, 228, 228)"
