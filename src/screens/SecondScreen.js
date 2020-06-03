@@ -60,12 +60,16 @@ class SecondScreen extends React.Component {
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
                         <View style={styles.teamNamesContainer}>
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: scale(32)}}>
-                                <View style={{ flex: 1, borderRadius: 50, backgroundColor: 'white', width: scale(16), alignItems: 'center'}}><Text>0</Text></View>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: scale(32) }}>
+                                <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
+                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#2ecc71" }}>0</Text>
+                                </View>
                                 <Text style={styles.teamName}>Mi</Text>
                             </View>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: scale(32) }}>
-                                <View style={{ flex: 1, borderRadius: 50, backgroundColor: 'white', width: scale(16), alignItems: 'center'}}><Text>0</Text></View>
+                                <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
+                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#e74c3c" }}>0</Text>
+                                </View>
                                 <Text style={styles.teamName}>Vi</Text>
                             </View>
                         </View>
