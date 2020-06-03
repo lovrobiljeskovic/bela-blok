@@ -60,8 +60,14 @@ class SecondScreen extends React.Component {
                 <View style={styles.roundPointsContainer}>
                     <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
                         <View style={styles.teamNamesContainer}>
-                            <Text style={styles.teamName}>Mi</Text>
-                            <Text style={styles.teamName}>Vi</Text>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: scale(32)}}>
+                                <View style={{ flex: 1, borderRadius: 50, backgroundColor: 'white', width: scale(16), alignItems: 'center'}}><Text>0</Text></View>
+                                <Text style={styles.teamName}>Mi</Text>
+                            </View>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: scale(32) }}>
+                                <View style={{ flex: 1, borderRadius: 50, backgroundColor: 'white', width: scale(16), alignItems: 'center'}}><Text>0</Text></View>
+                                <Text style={styles.teamName}>Vi</Text>
+                            </View>
                         </View>
                         <View>
                             <Divider />
@@ -128,11 +134,15 @@ const RoundPointsRow = (props) => {
 
     return (
         <TouchableOpacity onPress={handleRowPressed} style={styles.container}>
-            <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingRight: scale(32) }}>
+                <Text style={styles.title}>{item.teams[0].combinedPoints}</Text>
+            </View>
             <View style={styles.absoluteContainer}>
                 <Image source={getImageFromIndex(item.currentlyActiveColorButton)} resizeMode='stretch' style={{ width: scale(24), height: scale(24) }} />
             </View>
-            <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingLeft: scale(32) }}>
+                <Text style={styles.title}>{item.teams[1].combinedPoints}</Text>
+            </View>
         </TouchableOpacity>
     )
 }
@@ -238,12 +248,10 @@ const styles = StyleSheet.create({
     container: {
         position: "relative",
         height: scale(80),
-        paddingRight: scale(36),
         paddingBottom: scale(6),
-        paddingLeft: scale(36),
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         alignItems: "center",
         backgroundColor: "white",
         shadowColor: "#000",
