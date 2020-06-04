@@ -25,16 +25,6 @@ class TopBar extends React.Component {
         setSelectedTeam(teamName)
     }
 
-    // ensureTextIntegrity = ({ nativeEvent: { lines }}) => {
-    //     const { selectedTeamName, selectedPoints, teams, updateTeam } = this.props
-
-    //     const scoreToUpdate = selectedPoints === "Igra" ? 'score' : 'bonus'
-
-    //     if (lines.length > 1) {
-    //         updateTeam(selectedTeamName, {...teams[selectedTeamName], [scoreToUpdate]: teams[selectedTeamName][scoreToUpdate].slice(0, -1) })
-    //     }
-    // }
-
     onLayout = ({ nativeEvent: { layout } }, scoreType) => {
         this.setState({ [scoreType === "bonus" ? "bonusContainerWidth" : "scoreContainerWidth"]: layout.width })
     }
@@ -57,14 +47,15 @@ class TopBar extends React.Component {
 
     render() {
         const { isActive, bonus, score, name } = this.props;
-        const baseScore = 162
         const combinedScore = parseInt(score.number || '0') + parseInt(bonus.number || '0')
+
+        const notSelectedTextColor = name === "Mi" ? { color: "#27ae60" } : { color: "#c0392b" }
         
         return (
             <View style={styles.wrapperContainer}>
                 <TouchableOpacity onPress={() => this.handleTeamClick(name)} style={isActive ? [styles.root, styles.rootPadding, styles.selectedRoot] : [styles.root, styles.rootPadding]}>
                     <View style={styles.bonusContainer}>
-                        <Text style={styles.teamNameText}>
+                        <Text style={[styles.teamNameText, !isActive ? notSelectedTextColor : { color: 'rgb(58, 58, 60)' }]}>
                             {name}
                         </Text>
                         <Text style={styles.bonus} numberOfLines={1} onLayout={(e) => this.onLayout(e, "bonus")} onTextLayout={(e) => this.onTextLayout(e, "bonus")}>
