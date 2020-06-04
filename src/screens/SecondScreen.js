@@ -190,13 +190,13 @@ const EndOfGameScreen = (props) => {
                     <Text style={[styles.text, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
                 </View>
                 <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
-                    <View style={{ flex: 1, paddingLeft: scale(24), paddingRight: scale(24) }}>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
-                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Mi</Text>
-                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Vi</Text>
-                        </View>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
+                    <View style={{ flex: 1, flexDirection: "row", paddingLeft: scale(24), paddingRight: scale(24) }}>
+                        <View style={[styles.centeredView, { flex: 1 }]}>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900", color: "#27ae60" }]}>Mi</Text>
                             <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Mi"]}</Text>
+                        </View>
+                        <View style={[styles.centeredView, { flex: 1 }]}>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900", color: "#c0392b" }]}>Vi</Text>
                             <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Vi"]}</Text>
                         </View>
                     </View>
@@ -205,18 +205,18 @@ const EndOfGameScreen = (props) => {
                 <View style={[styles.centeredView, { flex: 26, flexDirection: 'row' }]}>
                     <View style={{ flex: 1 }}>
                         <View style={[styles.pointsRowContainer]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#27ae60" }]}>{combinedTeamRoundPoints[0]}</Text>
                             <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>igra</Text>
                             </View>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[1]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#c0392b" }]}>{combinedTeamRoundPoints[1]}</Text>
                         </View>
                         <View style={[styles.pointsRowContainer]}>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[0]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#27ae60" }]}>{totalBonus[0]}</Text>
                             <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>zvanje</Text>
                             </View>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[1]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#c0392b" }]}>{totalBonus[1]}</Text>
                         </View>
                     </View>
                 </View>
@@ -339,14 +339,6 @@ const styles = StyleSheet.create({
         paddingRight: scale(16),
         backgroundColor: "#ecf0f1",
         borderColor: "#ecf0f1",
-        shadowColor: "#ecf0f1",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 4,
-        elevation: 2,
     },
     numberText: {
         color: 'rgb(58, 58, 60)',
