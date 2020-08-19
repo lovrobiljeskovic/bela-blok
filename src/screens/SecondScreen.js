@@ -58,26 +58,24 @@ class SecondScreen extends React.Component {
                     <EndOfGameScreen overallPoints={overallPoints} combinedTeamRoundPoints={combinedTeamRoundPoints} didGameEnd={didGameEnd} gameWins={gameWins} handleNewGamePressed={this.handleNewGamePressed} />
                 }
                 <View style={styles.roundPointsContainer}>
-                    <View style={{ flexGrow: 0, flexShrink: 1, flexBasis: "auto" }}>
+                    <View style={{ flex: 30 }}>
                         <View style={styles.teamNamesContainer}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: scale(32) }}>
                                 <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
                                     <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#2ecc71" }}>{gameWins['Mi']}</Text>
                                 </View>
-                                <Text style={styles.teamName}>Mi</Text>
                             </View>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: scale(32) }}>
                                 <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
                                     <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#e74c3c" }}>{gameWins['Vi']}</Text>
                                 </View>
-                                <Text style={styles.teamName}>Vi</Text>
                             </View>
                         </View>
+                    </View>
+                    <View style={{ flex: 100 }}>
                         <View>
                             <Divider />
                         </View>
-                    </View>
-                    <View style={{ flex: 1 }}>
                         <FlatList
                             ref={(ref) => this.flatList = ref}
                             data={overallPoints}
@@ -92,9 +90,29 @@ class SecondScreen extends React.Component {
                 </View>
                 <View style={styles.overallScoresContainer}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center" }}>
-                        {combinedTeamRoundPoints.map((teamRoundPoints, index) => {
-                            return <Text key={index} style={styles.overallScoresText}>{teamRoundPoints}</Text>
-                        })}
+                        <View style={{ flex: 1 }}>
+                            <View style={{ flex: 8 }} />
+                            <View style={[styles.shrinkView, { flexGrow: 2, alignItems: "center" }]}>
+                                <Text style={[styles.text, { fontSize: moderateScale(24, 0.1), fontWeight: "600" }]}>igra</Text>
+                            </View>
+                            <View style={[styles.shrinkView, { flexDirection: 'row', justifyContent: 'space-between', alignItems: "center" }]}>
+                                {combinedTeamRoundPoints.map((teamRoundPoints, index) => {
+                                    return (
+                                        index !== combinedTeamRoundPoints.length - 1
+                                            ?
+                                            <View key={index} style={{ flex: 1, alignItems: "center", borderRightWidth: 1, borderColor: "rgb(189, 195, 199)" }}>
+                                                <Text style={styles.overallScoresText}>{teamRoundPoints}</Text>
+                                            </View>
+                                            :
+                                            <View key={index} style={{ flex: 1, alignItems: "center" }}>
+                                                <Text style={styles.overallScoresText}>{teamRoundPoints}</Text>
+                                            </View>
+                                    )
+                                })}
+                            </View>
+                            <View style={{ flex: 12 }} />
+                        </View>
+
                     </View>
                 </View>
                 <View style={styles.novaButtonContainer}>
@@ -172,13 +190,13 @@ const EndOfGameScreen = (props) => {
                     ))}
                 </View>
                 <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
-                    <View style={{ flex: 1, paddingLeft: scale(24), paddingRight: scale(24) }}>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
-                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Mi</Text>
-                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>Vi</Text>
-                        </View>
-                        <View style={[styles.centeredView, styles.shrinkView, { flexDirection: 'row', justifyContent: "space-around" }]}>
+                    <View style={{ flex: 1, flexDirection: "row", paddingLeft: scale(24), paddingRight: scale(24) }}>
+                        <View style={[styles.centeredView, { flex: 1 }]}>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900", color: "#27ae60" }]}>Mi</Text>
                             <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Mi"]}</Text>
+                        </View>
+                        <View style={[styles.centeredView, { flex: 1 }]}>
+                            <Text style={[styles.text, { fontSize: moderateScale(64, 0.1), fontWeight: "900", color: "#c0392b" }]}>Vi</Text>
                             <Text style={[styles.numberText, { fontSize: moderateScale(64, 0.1), fontWeight: "900" }]}>{gameWins["Vi"]}</Text>
                         </View>
                     </View>
@@ -191,14 +209,14 @@ const EndOfGameScreen = (props) => {
                             <View style={[styles.absoluteContainer, { paddingTop: '10', paddingBottom: '10', left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>igra</Text>
                             </View>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[1]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#c0392b" }]}>{combinedTeamRoundPoints[1]}</Text>
                         </View>
                         <View style={[styles.pointsRowContainer]}>
                             <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[0]}</Text>
                             <View style={[styles.absoluteContainer, { paddingTop: '10', paddingBottom: '10', left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>zvanje</Text>
                             </View>
-                            <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[1]}</Text>
+                            <Text style={[styles.numberText, { fontSize: moderateScale(24, 0.1), fontWeight: "600", color: "#c0392b" }]}>{totalBonus[1]}</Text>
                         </View>
                     </View>
                 </View>
@@ -230,14 +248,13 @@ const styles = StyleSheet.create({
         flex: 100
     },
     overallScoresContainer: {
-        flex: 40,
+        flex: 25,
         padding: scale(2),
     },
     overallScoresText: {
         fontSize: moderateScale(36),
         fontWeight: "900",
-        paddingLeft: scale(54),
-        paddingRight: scale(54),
+        color: 'rgb(58, 58, 60)',
     },
     novaButtonContainer: {
         flex: 20,
@@ -322,14 +339,6 @@ const styles = StyleSheet.create({
         paddingRight: scale(16),
         backgroundColor: "#ecf0f1",
         borderColor: "#ecf0f1",
-        shadowColor: "#ecf0f1",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 4,
-        elevation: 2,
     },
     numberText: {
         color: 'rgb(58, 58, 60)',
