@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import compose from "recompose/compose"
 import { connect } from "react-redux"
-import TopBar from '../components/TopBar'
 import { bindActionCreators } from "redux"
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image, StatusBar, Platform } from "react-native";
 import { scale, moderateScale, getWindowWidth, getWindowHeight } from '../utils/scalingUtils';
@@ -11,6 +10,7 @@ import { BlurView } from 'expo-blur'
 import { updateGameWins, resetAllPoints } from "../actions/actions"
 import { getImageFromIndex } from '../utils/imageUtils'
 import { setTeams, resetTeamPoints } from "../actions/actions"
+import Svg, { Circle } from 'react-native-svg';
 
 class SecondScreen extends React.Component {
     constructor(props) {
@@ -62,13 +62,13 @@ class SecondScreen extends React.Component {
                         <View style={styles.teamNamesContainer}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: scale(32) }}>
                                 <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
-                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#2ecc71" }}>0</Text>
+                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#2ecc71" }}>{gameWins['Mi']}</Text>
                                 </View>
                                 <Text style={styles.teamName}>Mi</Text>
                             </View>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: scale(32) }}>
                                 <View style={{ borderRadius: 50, backgroundColor: 'white', borderWidth: 1, borderColor: "#bdc3c7", width: scale(24), height: scale(24), justifyContent: "center", alignItems: 'center' }}>
-                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#e74c3c" }}>0</Text>
+                                    <Text style={{ fontSize: moderateScale(16, 0.1), fontWeight: "600", color: "#e74c3c" }}>{gameWins['Vi']}</Text>
                                 </View>
                                 <Text style={styles.teamName}>Vi</Text>
                             </View>
@@ -161,8 +161,15 @@ const EndOfGameScreen = (props) => {
     return (
         <Overlay isVisible={didGameEnd} overlayStyle={{ width: getWindowWidth() - scale(40), height: getWindowHeight() - scale(100), borderRadius: scale(8) }}>
             <View style={{ flex: 1 }}>
-                <View style={[styles.centeredView, { flex: 20, flexDirection: 'row' }]}>
-                    <Text style={[styles.text, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
+                <View style={[styles.centeredView, { flex: 20, flexDirection: 'column' }]}>
+                    <Text style={[combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? styles.miText : styles.viText, { fontSize: moderateScale(36, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0] > combinedTeamRoundPoints[1] ? 'Mi Smo pobjedili' : 'Vi ste pobjedili'}</Text>
+                </View>
+                <View style={[styles.centeredView, {flex: 20, flexDirection: 'row' }]}>
+                    {Array(8).fill().map((value, index) => (
+                        <Svg key={index} height="20" width="34" viewBox="0 0 34 20">
+                            <Circle cx="17" cy="10" r="4" fill="black" />
+                        </Svg>
+                    ))}
                 </View>
                 <View style={[styles.centeredView, { flex: 50, flexDirection: 'row' }]}>
                     <View style={{ flex: 1, paddingLeft: scale(24), paddingRight: scale(24) }}>
@@ -181,14 +188,14 @@ const EndOfGameScreen = (props) => {
                     <View style={{ flex: 1 }}>
                         <View style={[styles.pointsRowContainer]}>
                             <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[0]}</Text>
-                            <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
+                            <View style={[styles.absoluteContainer, { paddingTop: '10', paddingBottom: '10', left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>igra</Text>
                             </View>
                             <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{combinedTeamRoundPoints[1]}</Text>
                         </View>
                         <View style={[styles.pointsRowContainer]}>
                             <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[0]}</Text>
-                            <View style={[styles.absoluteContainer, { left: -scale(40) }]}>
+                            <View style={[styles.absoluteContainer, { paddingTop: '10', paddingBottom: '10', left: -scale(40) }]}>
                                 <Text style={[styles.text, { fontSize: moderateScale(16), fontWeight: "900" }]}>zvanje</Text>
                             </View>
                             <Text style={[styles.numberText, { fontSize: moderateScale(32, 0.1), fontWeight: "600" }]}>{totalBonus[1]}</Text>
@@ -328,9 +335,13 @@ const styles = StyleSheet.create({
         color: 'rgb(58, 58, 60)',
         fontVariant: ["tabular-nums"],
     },
-    text: {
-        color: 'rgb(58, 58, 60)',
+    miText: {
+        color: '#2ecc71',
         fontVariant: ["small-caps"],
+    },
+    viText: {
+        color: '#FF0000',
+        fontVariant: ["small-caps"]
     }
 });
 
